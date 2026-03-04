@@ -1,0 +1,17 @@
+[global]
+exclude = [
+    ".git",
+    "themes",
+]
+respect-gitignore = true
+
+[MD013]
+line-length = 88
+reflow = true # Enables automatic text reflow to wrap long lines intelligently
+code-blocks = false  # Exclude code blocks from line length check
+tables = false  # Exclude tables from line length check
+headings = true  # Include headings in line length check
+
+[MD044]
+names = ["CPython", "Python", "Rust", "GitHub"]  # Proper names that should be capitalized correctly
+code-blocks = false  # Check code blocks for proper names (default: false, skips code blocks)
