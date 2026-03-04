@@ -32,15 +32,12 @@ jobs:
         id: pages
         uses: actions/configure-pages@v5
 
-      - name: Setup homebrew
+      - name: Build
       # https://github.com/actions/runner-images/blob/main/images/ubuntu/Ubuntu2404-Readme.md#homebrew-note            
-        run: eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-
-      - name: Install Hugo
-        run: brew install hugo
-
-      - name: Build the site
-        run: hugo build --gc --minify --baseURL "${{ steps.pages.outputs.base_url }}/"
+        run: |
+          eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+          brew install hugo
+          hugo build --gc --minify --baseURL "${{ steps.pages.outputs.base_url }}/"
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
