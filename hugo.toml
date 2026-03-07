@@ -20,20 +20,18 @@ noClasses = false
 
 [params]
 title = "Raven's eyrie"
-description = "Bear Cub Demo"
 author = { name = "Ravencentric", email = "me@ravencentric.cc" }
-madeWith = "Made with [Bear Cub](https://github.com/clente/hugo-bearcub)"
 social = { github = "https://github.com/Ravencentric " }
 
 [[menu.main]]
 name = "GitHub"
 url = "https://github.com/Ravencentric"
-weight = 3
+weight = 98
 
 [[menu.main]]
 name = "Email"
 url = "mailto:me@ravencentric.cc"
-weight = 4
+weight = 99
 
 [caches]
 [caches.images]
