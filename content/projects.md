@@ -16,15 +16,14 @@ _A collection of *arrs and related stuff._ [[GitHub]](https://github.com/Ravence
 
 
 Essentially my first project on GitHub, which did not involve any code whatsoever. By the time we get here, I was already deep into
-self hosting -- Sonarr, Radarr, Plex, etc. I found a cool repository called [`rustyshackleford36/locatarr` (archived snapshot, 2020)](http://web.archive.org/web/20220913033723/https://github.com/rustyshackleford36/locatarr) that collected *arr family of apps. Unfortunately, this repository was deleted at one point, so I decided to make my own. To my surpise, this repository somehow grew to over 3k stars on GitHub.
+self hosting: Sonarr, Radarr, Plex, etc. I found a cool repository called [`rustyshackleford36/locatarr` (archived snapshot, 2020)](http://web.archive.org/web/20220913033723/https://github.com/rustyshackleford36/locatarr) that collected *arr family of apps. Unfortunately, this repository was deleted at one point, so I decided to make my own. To my surpise, this repository somehow grew to over 3k stars on GitHub.
 
 
 # juicenet-cli
 _CLI tool for uploading files to Usenet._ [[GitHub]](https://github.com/Ravencentric/juicenet-cli) [[PyPI]](https://pypi.org/project/juicenet-cli/) [[Docs]](https://juicenet.ravencentric.cc/)
 
 For all intents and purposes, this was the first piece of code I ever wrote that was more complex than fibonacci.
-It started off as a [single file script](https://github.com/Ravencentric/juicenet-cli/tree/ceff3b9e97a173795d2a2b1a8a38052997b20e00) that you coudln't even install from PyPI because I had no idea how to package something. I would be lying if I said I still love this codebase. Best praise I can give this is that it works but I think I could do way better if I rewrote it from scratch because that's the only way I'll
-get rid of every architectural mistake I made.
+It started off as a [single file script](https://github.com/Ravencentric/juicenet-cli/tree/ceff3b9e97a173795d2a2b1a8a38052997b20e00) that you coudln't even install from PyPI because I had no idea how to package something. I would be lying if I said I still love this codebase. Best praise I can give this is that it works well but I think I could do way better if I rewrote it from scratch because that's the only way I'll get rid of every architectural mistake I made.
 
 ### archivefile
 _Unified interface for multiple archive formats_
