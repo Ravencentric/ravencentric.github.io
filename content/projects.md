@@ -196,54 +196,32 @@ Despite that, myne has parsed every real-world filename I have thrown at it so f
 
 [Ascendance of a Bookworm]: https://j-novel.club/series/ascendance-of-a-bookworm
 
-### mkvinfo
-_Python library for inspecting Matroska files_
+# mkvinfo
+_Python library for probing matroska files with mkvmerge_
 
-mkvinfo wraps mkvmerge and exposes container metadata and track information as structured Python objects.
+[[GitHub]](https://github.com/Ravencentric/mkvinfo)
+[[PyPI]](https://pypi.org/project/mkvinfo/)
+[[Docs]](https://ravencentric.cc/mkvinfo/)
 
-### myne
-_Parser for manga and light novel filenames_
+I needed a way to introspect MKV files so I could classify them further. [`mkvmerge`] already exposes a lot of useful metadata, but consuming that output directly from Python gets annoying pretty quickly.
 
-Release filenames contain metadata like title, volume, year, and release group. myne extracts that information into a structured representation.
+So this library is basically a thin wrapper around that. It runs `mkvmerge -J` and turns the JSON output into typed Python objects so you can easily inspect tracks, codecs, and other metadata.
 
----
+[`mkvmerge`]: https://mkvtoolnix.download/doc/mkvmerge.html
 
-**NZB related projects**
+# misaki
+_misaki is a fast, asynchronous link checker with optional FlareSolverr support._
 
-# nzb
-_Python parser and metadata editor for NZB files_
+[[GitHub]](https://github.com/Ravencentric/misaki)
+[[crates.io: misaki-core]](https://crates.io/crates/misaki-core)
+[[crates.io: misaki-cli]](https://crates.io/crates/misaki-cli)
+[[Docs]](https://docs.rs/misaki_core/latest/misaki_core/)
 
-Spec compliant parser designed to read and modify NZB files programmatically.
+A good friend of mine wanted a link checker with flaresolverr support, so I wrote one.
+Now, a link checker is a pretty easy project and it was a perfect excuse to try out
+async Rust and this was the first time Rust felt like a pain. The errors got quite a bit cryptic and
+it felt like async support is still somewhat incomplete.
 
+Some patterns that should be simple end up awkward. For example, there is no built-in way to “yield” values from async code, so you end up relying on third-party crates like [`async-stream`] to emulate async generators. There is also no async drop, which makes cleaning up async resources harder than it should be.
 
-### rnzb
-_Python bindings for nzb-rs_
-
-Provides a faster drop-in replacement for the Python parser by using the Rust implementation underneath.
-
----
-
-**Small API clients**
-
-
-
-
-
-
-
-### privatebin
-_Python client for PrivateBin_
-
-Interact with PrivateBin servers to create, retrieve, and delete encrypted pastes.
-
----
-
-### awesome-arr
-_Curated list of *arr ecosystem software_
-
-Collection of tools and resources related to the *arr media automation ecosystem.
-
-### seadex-data-refinement
-_Tools for processing SeaDex datasets_
-
-Small scripts and utilities used to refine SeaDex dataset exports.
+[`async-stream`]: https://docs.rs/async-stream/latest/async_stream/
