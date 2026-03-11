@@ -185,7 +185,7 @@ _Parser for manga and light novel filenames_
 [[PyPI]](https://pypi.org/project/myne/)
 [[Docs]](https://ravencentric.cc/myne/)
 
-I was surprised I couldn't find a library that parsed manga and light novel filenames into structured metadata.
+I was surprised I couldn't find a library that parsed manga and light novel filenames into structured metadata like title, volume, and chapter.
 
 It's written in Rust with simple Python bindings. Under the hood it is entirely regex-based, and if you peek inside you will find some pretty gnarly expressions. Manga and light novels do not follow any real naming standard, so everything is based on convention. You would be surprised how terrible some of these filenames can get.
 
