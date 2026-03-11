@@ -178,10 +178,25 @@ The result is a small, typed PrivateBin client with a clean API and no dependenc
 [didn't]: https://github.com/Pioverpie/privatebin-api/issues/12
 [PBinCLI]: https://github.com/r4sas/PBinCLI
 
-### misaki
-_Asynchronous link checker written in Rust_
+# myne
+_Parser for manga and light novel filenames_
 
-misaki checks large sets of URLs concurrently and optionally integrates with FlareSolverr to deal with Cloudflare protected sites. It is available both as a library and a CLI.
+[[GitHub]](https://github.com/Ravencentric/myne)
+[[PyPI]](https://pypi.org/project/myne/)
+[[Docs]](https://ravencentric.cc/myne/)
+
+I was surprised I couldn't find a library that parsed manga and light novel filenames into structured metadata.
+
+The name "myne" comes from the main character of [Ascendance of a Bookworm], who really loves books.
+I'm still pretty proud of that one.
+
+It's written in Rust with simple Python bindings. Under the hood it is entirely regex-based, and if you peek inside you will find some pretty gnarly expressions.
+
+Manga and light novels do not follow any real naming standard, so everything is based on convention. You would be surprised how terrible some of these filenames can get.
+
+Despite that, myne has parsed every real-world filename I have thrown at it so far.
+
+[Ascendance of a Bookworm]: https://j-novel.club/series/ascendance-of-a-bookworm
 
 ### mkvinfo
 _Python library for inspecting Matroska files_
