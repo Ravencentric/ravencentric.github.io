@@ -159,7 +159,24 @@ _Python library for interacting with PrivateBin's v2 API (PrivateBin >= 1.3) to 
 [[PyPI]](https://pypi.org/project/privatebin/)
 [[Docs]](https://ravencentric.cc/privatebin/)
 
+I regularly use an instance of [PrivateBin] to temporarily and securely store logs from various scripts. Initially I used the [PrivateBinAPI] package. It had incomplete type hints and I was not a fan of the API, but it worked... until it [didn't].
 
+So I set out to write one from scratch.
+
+PrivateBin never actually sees your paste. Everything is encrypted client-side before being sent to the server, which only stores and returns the encrypted blob. The client therefore has to handle both encryption and decryption.
+
+Unfortunately (and maybe this was just me being dumb), the PrivateBin documentation did not help much here. So I started digging through the source code of [PrivateBinAPI] to figure out how it handled the protocol and encryption.
+
+Turns out... it doesn't. It depends on another PrivateBin library, [PBinCLI], to actually do the talking to PrivateBin.
+
+So I went and read that code instead. After a few hours of trial, error, and carefully extracting pieces of logic, I eventually isolated the core encryption and decryption routines. Once that part was figured out, implementing the rest of the client was fairly straightforward.
+
+The result is a small, typed PrivateBin client with a clean API and no dependency on another PrivateBin library.
+
+[PrivateBin]: https://privatebin.info/
+[PrivateBinAPI]: https://github.com/Pioverpie/privatebin-api/
+[didn't]: https://github.com/Pioverpie/privatebin-api/issues/12
+[PBinCLI]: https://github.com/r4sas/PBinCLI
 
 ### misaki
 _Asynchronous link checker written in Rust_
