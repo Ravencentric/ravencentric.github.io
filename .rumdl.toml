@@ -13,5 +13,5 @@ tables = false  # Exclude tables from line length check
 headings = true  # Include headings in line length check
 
 [MD044]
-names = ["CPython", "Python", "Rust", "GitHub"]  # Proper names that should be capitalized correctly
+names = ["CPython", "Python", "Rust", "GitHub", "API", "NZB"]  # Proper names that should be capitalized correctly
 code-blocks = false  # Check code blocks for proper names (default: false, skips code blocks)

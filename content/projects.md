@@ -53,13 +53,13 @@ Developing this also led me to find various bugs and missing functionality in [`
 
 
 # nzb
-_A spec compliant parser and meta editor for NZB files._
+_A spec compliant parser and meta editor for NZB files_
 
 [[GitHub]](https://github.com/Ravencentric/nzb)
 [[PyPI]](https://pypi.org/project/nzb/)
 [[Docs]](https://ravencentric.cc/nzb/)
 
-Possibly one of my favorites. It's a performant, pure python, dependency free, type-safe [spec]compliant parser and meta editor for NZB files following the "make invalid states unrepresentable" pattern (well, as long as you stick to the public API because it's Python after all) so if you successfully construct it, you know it's a valid NZB file. Beyond that, it also provides various ergonomic methods for introspecting itself. I've used it  extensively on real world files so i think i can confidently claim it's the best NZB parser in python, however niche that might be.
+Possibly one of my favorites. It's a performant, pure python, dependency free, type-safe [spec] compliant parser and meta editor for NZB files following the "make invalid states unrepresentable" pattern (well, as long as you stick to the public API because it's Python after all) so if you successfully construct it, you know it's a valid NZB structure. Beyond that, it also provides various ergonomic methods for introspecting itself. I've used it  extensively on real world files so i think i can confidently claim it's the best NZB parser in python, however niche that might be.
 
 [spec]: https://sabnzbd.org/wiki/extra/nzb-spec
 
@@ -75,14 +75,91 @@ Pretty much what it says on the tin. It's a fairly standard API wrapper for [Sea
 [SeaDex]: https://releases.moe/about/
 
 # stringenum
-_A small, dependency-free library offering additional enum.StrEnum subclasses and a backport for older Python versions._
+_A small, dependency-free library offering additional enum.StrEnum subclasses and a backport for older Python versions_
 
 [[GitHub]](https://github.com/Ravencentric/stringenum)
 [[PyPI]](https://pypi.org/project/stringenum/)
 
-This was mostly a toy project because I wanted to try out [metaclasses]. It backports features from latest Python versions down to 3.9 and provides a bunch of other string enums with different properties and guarantees.
+This was mostly a toy project because I wanted to play with [metaclasses]. It backports features from latest Python versions down to 3.9 and provides a bunch of other string enums with different properties and guarantees.
 
 [metaclasses]: https://docs.python.org/3/reference/datamodel.html#metaclasses
+
+
+# nzb-rs
+_A spec compliant parser for NZB files_
+
+[[GitHub]](https://github.com/Ravencentric/nzb-rs)
+[[crates.io]](https://crates.io/crates/nzb-rs)
+[[Docs]](https://docs.rs/nzb-rs/latest/nzb_rs/)
+
+Rust had been on my radar for a while. It looked like a fascinating language, so one day I finally sat down and read the [Rust book]. Great tooling (cargo), null safety, a powerful type system, pattern matching - there was a lot to like. Naturally, I needed a project, and parsers seemed like exactly the kind of thing Rust excels at. My [NZB parser] was a perfect candidate: it deals with XML, a format with a long history of security pitfalls that safe Rust largely avoids by design.
+
+The experience turned out to be surprisingly smooth. Moving from Python to Rust felt quite natural, likely thanks to Rust's zero-cost abstractions that feel just as expressive as many Python constructs. Static typing also felt at home since I was already a fan of type hints in Python.
+
+Traits felt like a more powerful blend of dunder methods, `abc.ABC`, and `typing.Protocol`. I miss Rust's enums every time I write Python, and the ergonomic `Option<T>` would make any [PEP-505] fans jealous (myself included).
+
+Despite its reputation, the borrow checker rarely got in my way. The rules felt intuitive: a value has a single owner, and only one mutable reference at a time. I also barely had to think about lifetimes since the compiler inferred most of them. Things only became rougher when I experimented with async and started running into more cryptic borrow-checker errors, but that is a story for another time.
+
+With those impressions in mind, the project itself evolved alongside my understanding of Rust. The [first version] of the parser was a fairly direct port of the [Python implementation] with an almost identical API. Even so, the Rust version ended up being several times faster. Some of that came from Rust itself, but the process also highlighted inefficiencies in the Python implementation. After taking those lessons back, I was able to remove quite a bit of slower code and narrow the performance gap. Later versions of the Rust library evolved into a more idiomatic API. Ironically, the Python implementation eventually [adopted] that API as well.
+
+[Rust book]: https://doc.rust-lang.org/book/
+[NZB parser]: https://github.com/Ravencentric/nzb
+[PEP-505]: https://peps.python.org/pep-0505/
+[first version]: https://docs.rs/nzb-rs/0.1.0/nzb_rs/
+[Python implementation]: https://github.com/Ravencentric/nzb/blob/v0.3.0/src/nzb/_core.py
+[adopted]: https://github.com/Ravencentric/nzb/releases/tag/v0.4.0
+
+# rnzb
+_Python bindings to the nzb-rs library - a spec compliant parser for NZB files, written in Rust_
+
+[[GitHub]](https://github.com/Ravencentric/rnzb)
+[[PyPI]](https://pypi.org/project/rnzb/)
+
+A third NZB parser? Yes. At this point I might have a problem.
+
+After writing one in Python and another in Rust, I had a thought: "Wouldn't it be cool to use the Rust implementation directly from Python and get the best of both worlds?" Spoiler alert: yes.
+
+My goal was simple: a drop-in replacement so existing Python code could immediately benefit from the Rust parser.
+
+After a bit of research I found [PyO3], which powers Pydantic and many other Rust-powered Python extensions. There were a few small hiccups along the way, but the PyO3 docs and maintainers were incredibly helpful whenever I had questions.
+
+Once everything worked and the tests passed, the next step was packaging. Wheels are prebuilt Python packages so users do not have to compile anything during installation. To build wheels for multiple platforms I used [pypa/cibuildwheel], which seems to be what most projects rely on for this.
+
+One interesting detail about extension wheels is Python version compatibility. For example: `rnzb-0.6.0-cp314-cp314-win_arm64.whl`. The `cp314-cp314` tag means the wheel only works on CPython 3.14. On newer versions the installer falls back to the source distribution (sdist) and tries to build it locally, which usually fails unless a Rust toolchain is installed.
+
+To avoid releasing new wheels for every Python version, I built the extension against the [Limited C API] (abi3), which PyO3 supports. The result looks like this: `rnzb-0.6.0-cp39-abi3-win_amd64.whl`. The `cp39-abi3` tag means the same wheel works on every CPython version starting from Python 3.9.
+
+So yes, the end result was a third NZB parser. But this one is a little different: rnzb brings the speed and safety of the Rust implementation to Python while keeping a familiar drop-in API. Python users get the fast Rust parser without changing their code.
+
+[PyO3]: https://pyo3.rs/
+[pypa/cibuildwheel]: https://github.com/pypa/cibuildwheel
+[Limited C API]: https://docs.python.org/3/c-api/stable.html#limited-c-api
+
+# atomicwriter
+_Cross-platform atomic file writer for all-or-nothing operations._
+
+[[GitHub]](https://github.com/Ravencentric/atomicwriter)
+[[PyPI]](https://pypi.org/project/atomicwriter/)
+[[Docs]](https://ravencentric.cc/atomicwriter/)
+
+Every now and then I run into situations where I need to write something atomically. There used to be a package for this, [`python-atomicwrites`], but it is unmaintained now.
+
+I am by no means an expert in file system behavior across different platforms, but I knew of a library that was: Rust's [`tempfile`] crate. It already implements atomic writes (and a lot more) correctly across platforms.
+
+Thanks to everything I learned from my previous projects, this one was fairly straightforward. I wrote a thin wrapper around the Rust library, exposed an idiomatic Python API, added some tests, and published it with abi3 wheels.
+
+[`python-atomicwrites`]: https://github.com/untitaker/python-atomicwrites
+[`tempfile`]: https://docs.rs/tempfile/latest/tempfile/
+
+
+# privatebin
+_Python library for interacting with PrivateBin's v2 API (PrivateBin >= 1.3) to create, retrieve, and delete encrypted pastes._
+
+[[GitHub]](https://github.com/Ravencentric/privatebin)
+[[PyPI]](https://pypi.org/project/privatebin/)
+[[Docs]](https://ravencentric.cc/privatebin/)
+
+
 
 ### misaki
 _Asynchronous link checker written in Rust_
@@ -108,10 +185,6 @@ _Python parser and metadata editor for NZB files_
 
 Spec compliant parser designed to read and modify NZB files programmatically.
 
-### nzb-rs
-_Rust implementation of the NZB parser_
-
-A Rust port of the parser focused on correctness and performance.
 
 ### rnzb
 _Python bindings for nzb-rs_
