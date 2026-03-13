@@ -55,13 +55,11 @@ choice.
 [[PyPI]](https://pypi.org/project/pyanilist/)
 [[Docs]](https://ravencentric.cc/pyanilist/)
 
-I was using the [AniList API] a lot in various scripts to manage my self-hosted collection. AniList offers a GraphQL API that's fairly annoying to work with, in my opinion, due to a lot of circular structures and awkward shapes.
+I was using the [AniList API] a lot in various scripts to manage my self-hosted collection.
+For a while I stuck to existing libraries but issues kept cropping up and I was never really happy
+with the lack of type hints or structured objects or both in said libraries. Some of them also seemed entirely unmaintained. After I had enough of TypeErrors and `data["Media"][0]["title"]["english"]`, I finally gave up and started writing my own. Now, how hard can an API wrapper be anyway? Just parse a REST API and be done with it -- nope, turns out AniList API is GraphQL with a massive surface, circular structures, awkward shapes. I guess that explains why nobody wanted to maintain an AniList library. After a lot of trial and error, I decided I would rather have an ergonomic API than cover everything AniList has to offer. So, I narrowed down APIs I would need and tried making them as simple as possible. I also had to post-process the returned response because AniList isn't consistent at all, e.g., "empty" nested fields are inconsistent, some nested fields get a null on each field while some just replace the entire object with null. Arrays might also just have a null sometimes because why not. Anyway, that's to say, I do a little bit of post processing so
+that you get exactly what the type hints say you will and reduce a bit of None-checks that would be needed otherwise. On a slight tangent, this is also a project where I really wish Python had some form of [None-aware operators].
 
-I ran through a few existing libraries that attempted to wrap the AniList API, but they were largely untyped and had unergonomic APIs. Providing a fully typed and ergonomic API for all of AniList would probably be feasible, but it likely wouldn't be worth the effort.
-
-So I set out to write my own: a more opinionated wrapper with a smaller API surface, but one that's type-safe, lazy, and ergonomic.
-
-On a slight tangent, this is also a project where I really wish Python had some form of [None-aware operators]. AniList data structures can get fairly deep and essentially every field can be nullable, which means traversing them often turns into a mess of `if x is not None` checks.
 
 
 [AniList API]: https://docs.anilist.co/
