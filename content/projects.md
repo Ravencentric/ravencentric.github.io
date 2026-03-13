@@ -16,13 +16,11 @@ some grow into libraries.
 
 [[GitHub]](https://GitHub.com/Ravencentric/awesome-arr)
 
-Essentially my first project on GitHub, which did not involve any code whatsoever. By
-the time we get here, I was already deep into self hosting: Sonarr, Radarr, Plex, etc. I
-found a cool repository called
-[`rustyshackleford36/locatarr` (archived snapshot, 2020)](http://web.archive.org/web/20220913033723/https://github.com/rustyshackleford36/locatarr)
-that collected *arr family of apps. Unfortunately, this repository was deleted at one
-point, so I decided to make my own. To my surpise, this repository somehow grew to over
-3k stars on GitHub.
+Essentially my first project on GitHub, which didn’t involve any code whatsoever.
+
+By the time we get here, I was already deep into self-hosting: Sonarr, Radarr, Plex, etc. During this time, I came across a cool repository, [rustyshackleford36/locatarr], that collected *arr-family apps. I used to check it every now and then, but at some point the repository disappeared, so I decided to make my own while also greatly expanding on the original collection. To my surprise, it somehow ended up with over 3k stars on GitHub.
+
+[rustyshackleford36/locatarr]: http://web.archive.org/web/20220913033723/https://github.com/rustyshackleford36/locatarr
 
 ## juicenet-cli
 
@@ -33,12 +31,21 @@ point, so I decided to make my own. To my surpise, this repository somehow grew 
 [[Docs]](https://juicenet.ravencentric.cc/)
 
 For all intents and purposes, this was the first piece of code I ever wrote that was
-more complex than fibonacci. It started off as a
-[single file script](https://github.com/Ravencentric/juicenet-cli/tree/ceff3b9e97a173795d2a2b1a8a38052997b20e00)
-that you coudln't even install from PyPI because I had no idea how to package something.
-I would be lying if I said I still love this codebase. Best praise I can give this is
-that it works well but I think I could do way better if I rewrote it from scratch
-because that's the only way I'll get rid of every architectural mistake I made.
+more complex than Fibonacci. It started off as a [single-file script] that you couldn't even install from PyPI because I had no idea how to package anything.
+
+I would be lying if I said I still love this codebase. The best praise I can give it is
+that it works well and is likely one of the few (if not the only) uploaders that preserves
+folders without using RAR, relying on PAR2 files instead (if you don't know much about
+Usenet, it has no concept of folders).
+
+But I think I could do way better if I rewrote it from scratch, because that's probably
+the only way I'd get rid of every architectural mistake I made. The problem is that doing
+so would likely break a fair number of users the project has gained, so it's a tough
+choice.
+
+[single-file script]: https://github.com/Ravencentric/juicenet-cli/tree/ceff3b9e97a173795d2a2b1a8a38052997b20e00
+
+
 
 ## pyanilist
 
@@ -48,10 +55,17 @@ because that's the only way I'll get rid of every architectural mistake I made.
 [[PyPI]](https://pypi.org/project/pyanilist/)
 [[Docs]](https://ravencentric.cc/pyanilist/)
 
-A type-safe, ergonomic, lazy sync/async wrapper for the AniList. It uses iterators a lot
-to lazily make requests. I was using the [AniList API](https://docs.anilist.co/) a lot
-in various scripts to manage my self-hosted collection and existing libraries were
-pretty much entirely untyped and i wasn't happy with their API.
+I was using the [AniList API] a lot in various scripts to manage my self-hosted collection. AniList offers a GraphQL API that's fairly annoying to work with, in my opinion, due to a lot of circular structures and awkward shapes.
+
+I ran through a few existing libraries that attempted to wrap the AniList API, but they were largely untyped and had unergonomic APIs. Providing a fully typed and ergonomic API for all of AniList would probably be feasible, but it likely wouldn't be worth the effort.
+
+So I set out to write my own: a more opinionated wrapper with a smaller API surface, but one that's type-safe, lazy, and ergonomic.
+
+On a slight tangent, this is also a project where I really wish Python had some form of [None-aware operators]. AniList data structures can get fairly deep and essentially every field can be nullable, which means traversing them often turns into a mess of `if x is not None` checks.
+
+
+[AniList API]: https://docs.anilist.co/
+[None-aware operators]: https://peps.python.org/pep-0505/
 
 ## pynyaa
 
