@@ -24,7 +24,7 @@ By the time we get here, I was already deep into self-hosting: Sonarr, Radarr, P
 
 ## juicenet-cli
 
-*CLI tool for uploading files to Usenet*
+*CLI tool designed to simplify the process of uploading files to Usenet*
 
 [[GitHub]](https://GitHub.com/Ravencentric/juicenet-cli)
 [[PyPI]](https://pypi.org/project/juicenet-cli/)
@@ -35,7 +35,7 @@ more complex than Fibonacci. It started off as a [single-file script] that you c
 
 I would be lying if I said I still love this codebase. The best praise I can give it is
 that it works well and is likely one of the few (if not the only) uploaders that preserves
-folders without using RAR, relying on PAR2 files instead (if you don't know much about
+folders without using [RAR], relying on PAR2 files instead (if you don't know much about
 Usenet, it has no concept of folders).
 
 But I think I could do way better if I rewrote it from scratch, because that's probably
@@ -44,6 +44,7 @@ so would likely break a fair number of users the project has gained, so it's a t
 choice.
 
 [single-file script]: https://github.com/Ravencentric/juicenet-cli/tree/ceff3b9e97a173795d2a2b1a8a38052997b20e00
+[RAR]: https://github.com/animetosho/Nyuu/wiki/Stop-RAR-Uploads
 
 
 
