@@ -56,15 +56,16 @@ choice.
 [[PyPI]](https://pypi.org/project/pyanilist/)
 [[Docs]](https://ravencentric.cc/pyanilist/)
 
-I was using the [AniList API] a lot in various scripts to manage my self-hosted collection.
-For a while I stuck to existing libraries but issues kept cropping up and I was never really happy
-with the lack of type hints or structured objects or both in said libraries. Some of them also seemed entirely unmaintained. After I had enough of TypeErrors and `data["Media"][0]["title"]["english"]`, I finally gave up and started writing my own. Now, how hard can an API wrapper be anyway? Just parse a REST API and be done with it but nope, turns out AniList API is GraphQL with a massive surface, circular structures, awkward shapes. I guess that explains why nobody wanted to maintain an AniList library. After mulling over it a bit, I decided I would rather have an ergonomic API than cover everything AniList has to offer. So, I narrowed down APIs I would need and tried making them as simple as possible. I also had to post-process the returned response because AniList isn't consistent at all, e.g., "empty" nested fields are inconsistent, some nested fields get a null on each field while some just replace the entire object with null. Arrays might also just have a null sometimes because why not. Anyway, that's to say, I do a little bit of post processing so
-that you get exactly what the type hints say you will and reduce a bit of None-checks that would be needed otherwise. On a slight tangent, this is also a project where I really wish Python had some form of [None-aware operators].
+I use the [AniList API] in a lot of scripts to manage my self-hosted collection. For a while I stuck with existing libraries, but issues kept cropping up and I was never really happy with them - most lacked proper type hints, structured objects, or both. Some also seemed entirely unmaintained. After enough `TypeError`s and expressions like `data["Media"][0]["title"]["english"]`, I finally gave up and started writing my own.
 
+How hard can an API wrapper be anyway? Just parse the API and be done with it. Except AniList is GraphQL, with a pretty large surface area, circular relationships, and some awkward response shapes. That probably explains why nobody seemed eager to maintain an AniList library. After thinking about it for a bit, I decided I would rather have an ergonomic API than try to cover everything AniList exposes, so I narrowed things down to the parts I actually needed and focused on making those simple.
 
+I also ended up post-processing responses because AniList is not particularly consistent. Sometimes "empty" nested objects have every field set to null, sometimes the entire object is just null, and arrays occasionally contain null elements for good measure. The wrapper normalizes these cases so the returned values match the type hints and require fewer None checks.
+
+On a slight tangent, this is also a project where I really wish Python had some form of [`None`-aware operator].
 
 [AniList API]: https://docs.anilist.co/
-[None-aware operators]: https://peps.python.org/pep-0505/
+[`None`-aware operator]: https://peps.python.org/pep-0505/
 
 ## pynyaa
 
