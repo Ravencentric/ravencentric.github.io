@@ -75,10 +75,34 @@ On a slight tangent, this is also a project where I really wish Python had some 
 [[PyPI]](https://pypi.org/project/pynyaa/)
 [[Docs]](https://ravencentric.cc/pynyaa/)
 
-Pretty much the same story as above, i.e., type-safe, ergonomic, and lazy sync/async
-wrapper for the cat site which doesn't offer an API because existing libraries lacked in
-those departments. This library doesn't download anything, it's just for scraping
-metadata.
+AniList metadata wasn't the only thing my scripts needed, but unfortunately
+Nyaa does not offer any API. I looked around for existing libraries but didn't
+find anything satisfactory.
+
+So I wrote a small function that parsed the page for the few fields I needed.
+That worked for a while, but the function kept growing as I needed more and
+more metadata from Nyaa. Eventually it got messy enough that I decided to turn
+it into a standalone library.
+
+The first release ended up with about ten dependencies (seven if you were on
+Python >= 3.11): things like pydantic, lxml, hishel for caching, and a few
+others. This wasn't really an issue for me at the time, but as I worked on more
+projects I developed a stronger stance against unnecessary dependencies and
+libraries that try to do too much.
+
+When I came back to this project, that was something I wanted to fix. For
+example, caching is better handled by passing a custom HTTP client configured
+however you like. And since the library already validates everything manually,
+pydantic ended up being little more than a fancy dataclass.
+
+Later versions gradually removed most of these dependencies while also
+simplifying the codebase. These days it only depends on two packages regardless
+of Python version: a network stack (httpx) and an HTML parser (beautifulsoup4).
+
+At this point it covers pretty much every field Nyaa exposes and has completely
+replaced my original scraping code. It returns type-safe, structured objects
+and works in both sync and async code, and since I rely on it heavily in my own
+scripts it has also ended up fairly battle-tested against real-world cases.
 
 ### archivefile
 
