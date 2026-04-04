@@ -184,7 +184,7 @@ fairly battle-tested against real-world cases.
 I was dealing with archive files of various formats and scripting against them quickly
 became an annoying dance of if-else branches to handle the fact that [tarfile][tarfile],
 [zipfile][zipfile], [py7zr][py7zr], and [rarfile][rarfile] all behave differently
-despite doing the same basic things. So I wrote archivefile.
+despite doing the same basic things. So I wrote `archivefile`.
 
 On a high level, `ArchiveFile` is defined by a protocol with an API that covers the
 common functionality. It’s somewhat inspired by [pathlib][pathlib], which I think is
