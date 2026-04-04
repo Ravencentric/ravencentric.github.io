@@ -18,7 +18,12 @@ some grow into libraries.
 
 Essentially my first project on GitHub, which didn’t involve any code whatsoever.
 
-By the time we get here, I was already deep into self-hosting: Sonarr, Radarr, Plex, etc. During this time, I came across a cool repository, [rustyshackleford36/locatarr], that collected *arr-family apps. I used to check it every now and then, but at some point the repository disappeared, so I decided to make my own while also greatly expanding on the original collection. To my surprise, it somehow ended up with over 3k stars on GitHub.
+By the time we get here, I was already deep into self-hosting: Sonarr, Radarr, Plex,
+etc. During this time, I came across a cool repository, [rustyshackleford36/locatarr],
+that collected *arr-family apps. I used to check it every now and then, but at some
+point the repository disappeared, so I decided to make my own while also greatly
+expanding on the original collection. To my surprise, it somehow ended up with over 3k
+stars on GitHub.
 
 [rustyshackleford36/locatarr]: http://web.archive.org/web/20220913033723/https://github.com/rustyshackleford36/locatarr
 
@@ -30,23 +35,60 @@ By the time we get here, I was already deep into self-hosting: Sonarr, Radarr, P
 [[PyPI]](https://pypi.org/project/juicenet-cli/)
 [[Docs]](https://juicenet.ravencentric.cc/)
 
-For all intents and purposes, this was the first piece of code I ever wrote that was more complex than Fibonacci. It started off as a [single-file script] that you couldn't even install from PyPI because I had no idea how to package anything.
+For all intents and purposes, this was the first piece of code I ever wrote that was
+more complex than Fibonacci. It started off as a [single-file script] that you couldn't
+even install from PyPI because I had no idea how to package anything.
 
-If you don't know much about uploading things to usenet, you can't upload folders, only individual files, and you should obfuscate them. Typical workflow is that your uploader splits the file into pieces called "articles" (if you're familiar with torrenting, this is similar), uploads them, and records them in an [NZB] file. Downloaders then use the NZB to grab each article and reconstruct the file. If a single article is lost, deleted, or corrupted, everything breaks, so there are also parity files called [PAR2] which are generated for a given data file and uploaded together, allowing the client to repair the file up to a certain threshold.
+If you don't know much about uploading things to usenet, you can't upload folders, only
+individual files, and you should obfuscate them. Typical workflow is that your uploader
+splits the file into pieces called "articles" (if you're familiar with torrenting, this
+is similar), uploads them, and records them in an [NZB] file. Downloaders then use the
+NZB to grab each article and reconstruct the file. If a single article is lost, deleted,
+or corrupted, everything breaks, so there are also parity files called [PAR2] which are
+generated for a given data file and uploaded together, allowing the client to repair the
+file up to a certain threshold.
 
-Now, pretty much all existing Usenet uploaders wrap your file or folder in split, obfuscated RAR archives which then get split into articles. They then write this obfuscated nonsense in the NZB file, which means you can no longer statically parse it to get any metadata. And obfuscating the NZB is worse than useless. You only really wanna obfuscate the data you're uploading, because once you have the NZB you can download the file regardless. The RAR step may have served some purpose 20 years ago but it's entirely wasteful now. It's probably a mix of history, people following existing practices blindly, and the misconception that RARing is necessary for obfuscation and/or preserving a folder.
+Now, pretty much all existing Usenet uploaders wrap your file or folder in split,
+obfuscated RAR archives which then get split into articles. They then write this
+obfuscated nonsense in the NZB file, which means you can no longer statically parse it
+to get any metadata. And obfuscating the NZB is worse than useless. You only really
+wanna obfuscate the data you're uploading, because once you have the NZB you can
+download the file regardless. The RAR step may have served some purpose 20 years ago but
+it's entirely wasteful now. It's probably a mix of history, people following existing
+practices blindly, and the misconception that RARing is necessary for obfuscation and/or
+preserving a folder.
 
-And you know what else PAR2 files can do? They can rename the file to its original name, which you can use to reconstruct the folder structure. So we no longer need RARs for that. RAR is also unnecessary for obfuscation, since that already happens at the article level. While testing this setup, I also found a [bug] in SABnzbd where it failed to correctly reconstruct the folder structure from PAR2 alone, which got fixed pretty quickly.
+And you know what else PAR2 files can do? They can rename the file to its original name,
+which you can use to reconstruct the folder structure. So we no longer need RARs for
+that. RAR is also unnecessary for obfuscation, since that already happens at the article
+level. While testing this setup, I also found a [bug] in SABnzbd where it failed to
+correctly reconstruct the folder structure from PAR2 alone, which got fixed pretty
+quickly.
 
-Now, I'm not the first one to notice any of this. Everything I've said here I learned from [@animetosho]'s extremely well written article, [Stop RAR Uploads], which goes into more detail. They also happen to maintain the best Usenet tooling there is: [Nyuu] as the uploader, and [ParPar] as the PAR2 generator. Nyuu [doesn't generate PAR2 files by default][#58] and ParPar doesn't preserve anything but the basename by default, which makes sense, as they can't really assume what the user wants.
+Now, I'm not the first one to notice any of this. Everything I've said here I learned
+from [@animetosho]'s extremely well written article, [Stop RAR Uploads], which goes into
+more detail. They also happen to maintain the best Usenet tooling there is: [Nyuu] as
+the uploader, and [ParPar] as the PAR2 generator. Nyuu
+[doesn't generate PAR2 files by default][#58] and ParPar doesn't preserve anything but
+the basename by default, which makes sense, as they can't really assume what the user
+wants.
 
 But I can.
 
-So the next step was familiarizing myself with Nyuu and ParPar. Mostly ParPar, since I had to figure out how to preserve folders with ParPar's [`--filepath-format`] option. After that, I wrote a tiny script that calls ParPar and Nyuu with the correct arguments and called it Juicenet.
+So the next step was familiarizing myself with Nyuu and ParPar. Mostly ParPar, since I
+had to figure out how to preserve folders with ParPar's [`--filepath-format`] option.
+After that, I wrote a tiny script that calls ParPar and Nyuu with the correct arguments
+and called it Juicenet.
 
-The quality of the code in Juicenet hasn't aged well. It's very much a novice's first attempt and it shows.
+The quality of the code in Juicenet hasn't aged well. It's very much a novice's first
+attempt and it shows.
 
-Still, it has gained more users than I ever expected, likely because to this day it's one of the few, if not the only, high level uploaders that does everything without using RAR archives. I can definitely do way better if I rewrote it from scratch, because that's probably the only way I'd get rid of every architectural mistake I made, but the fact that this has real users means I'll end up breaking them, so it's not exactly an easy choice.
+Still, it has gained more users than I ever expected, likely because to this day it's
+one of the few, if not the only, high level uploaders that does everything without using
+RAR archives. I can definitely do way better if I rewrote it from scratch, because
+that's probably the only way I'd get rid of every architectural mistake I made, but the
+fact that this has real users means I'll end up breaking them, so it's not exactly an
+easy choice.
 
 [single-file script]: https://github.com/Ravencentric/juicenet-cli/tree/ceff3b9e97a173795d2a2b1a8a38052997b20e00
 [NZB]: https://en.wikipedia.org/wiki/NZB
@@ -54,8 +96,8 @@ Still, it has gained more users than I ever expected, likely because to this day
 [bug]: https://github.com/sabnzbd/sabnzbd/issues/2626
 [@animetosho]: https://github.com/animetosho
 [Stop RAR Uploads]: https://github.com/animetosho/Nyuu/wiki/Stop-RAR-Uploads
-[Nyuu]: https://github.com/animetosho/Nyuu 
-[ParPar]: https://github.com/animetosho/ParPar 
+[Nyuu]: https://github.com/animetosho/Nyuu
+[ParPar]: https://github.com/animetosho/ParPar
 [#58]: https://github.com/animetosho/Nyuu/issues/5
 [`--filepath-format`]: https://juicenet.ravencentric.cc/archive/parpar-filepath-formats/
 
@@ -67,15 +109,35 @@ Still, it has gained more users than I ever expected, likely because to this day
 [[PyPI]](https://pypi.org/project/pyanilist/)
 [[Docs]](https://ravencentric.cc/pyanilist/)
 
-I use the [AniList API] in a lot of scripts to manage my self-hosted collection. For a while I stuck with existing libraries, but issues kept cropping up and I was never really happy with them - most lacked proper type hints, structured objects, or both. Some also seemed entirely unmaintained. After enough `TypeError`s and expressions like `data["Media"][0]["title"]["english"]`, I finally gave up and started writing my own.
+I use the [AniList API] in a lot of scripts to manage my self-hosted collection. For a
+while I stuck with existing libraries, but issues kept cropping up and I was never
+really happy with them - most lacked proper type hints, structured objects, or both.
+Some also seemed entirely unmaintained. After enough `TypeError`s and expressions like
+`data["Media"][0]["title"]["english"]`, I finally gave up and started writing my own.
 
-How hard can an API wrapper be anyway? Just parse the API and be done with it. Except AniList is GraphQL, with a pretty large surface area, circular relationships, and some awkward response shapes. That probably explains why nobody seemed eager to maintain an AniList library. After thinking about it, I decided I would rather have an ergonomic API than try to cover everything AniList exposes, so I narrowed things down to what I actually needed and focused on making that simple.
+How hard can an API wrapper be anyway? Just parse the API and be done with it. Except
+AniList is GraphQL, with a pretty large surface area, circular relationships, and some
+awkward response shapes. That probably explains why nobody seemed eager to maintain an
+AniList library. After thinking about it, I decided I would rather have an ergonomic API
+than try to cover everything AniList exposes, so I narrowed things down to what I
+actually needed and focused on making that simple.
 
-I also ended up post-processing responses because AniList is not particularly consistent. Sometimes "empty" nested objects have every field set to null, sometimes the entire object is just null, and arrays occasionally contain null elements. The wrapper normalizes these cases so the returned values match the type hints and require fewer None checks.
+I also ended up post-processing responses because AniList is not particularly
+consistent. Sometimes "empty" nested objects have every field set to null, sometimes the
+entire object is just null, and arrays occasionally contain null elements. The wrapper
+normalizes these cases so the returned values match the type hints and require fewer
+None checks.
 
-The first version of this library released with 9 required dependencies. This wasn't a problem for me at the time, but as I worked on more projects I started developing a stronger stance on unnecessary dependencies. For example, a dependency that's slow to update blocks my entire project from updating to the next Python version. So as I worked on this further, I slowly removed most of them, to the point where the latest version only depends on two things: a networking stack (httpx) and a data validation library (msgspec).
+The first version of this library released with 9 required dependencies. This wasn't a
+problem for me at the time, but as I worked on more projects I started developing a
+stronger stance on unnecessary dependencies. For example, a dependency that's slow to
+update blocks my entire project from updating to the next Python version. So as I worked
+on this further, I slowly removed most of them, to the point where the latest version
+only depends on two things: a networking stack (httpx) and a data validation library
+(msgspec).
 
-On a slight tangent, this is also a project where I really wish Python had some form of [`None`-aware operator].
+On a slight tangent, this is also a project where I really wish Python had some form of
+[`None`-aware operator].
 
 [AniList API]: https://docs.anilist.co/
 [`None`-aware operator]: https://peps.python.org/pep-0505/
@@ -88,15 +150,28 @@ On a slight tangent, this is also a project where I really wish Python had some 
 [[PyPI]](https://pypi.org/project/pynyaa/)
 [[Docs]](https://ravencentric.cc/pynyaa/)
 
-AniList metadata wasn't the only thing my scripts needed, but Nyaa does not offer any API. I looked around for existing libraries but didn't find anything satisfactory.
+AniList metadata wasn't the only thing my scripts needed, but Nyaa does not offer any
+API. I looked around for existing libraries but didn't find anything satisfactory.
 
-So I wrote a small function that parsed the page for the few fields I needed. That worked for a while, but it kept growing as I needed more metadata from Nyaa. At some point it started hitting quirks of how the site represents things (a release can be both trusted and a remake, but since the panel only has a single color it ends up red), and eventually it got messy enough that I decided to turn it into a standalone library.
+So I wrote a small function that parsed the page for the few fields I needed. That
+worked for a while, but it kept growing as I needed more metadata from Nyaa. At some
+point it started hitting quirks of how the site represents things (a release can be both
+trusted and a remake, but since the panel only has a single color it ends up red), and
+eventually it got messy enough that I decided to turn it into a standalone library.
 
-The first release tried to do too much and ended up with about ten dependencies. It handled caching, parsed torrent files, used pydantic despite already validating everything by hand, and pulled in lxml when the standard library would have been enough.
+The first release tried to do too much and ended up with about ten dependencies. It
+handled caching, parsed torrent files, used pydantic despite already validating
+everything by hand, and pulled in lxml when the standard library would have been enough.
 
-That made it harder to use in different contexts, since it forced those decisions onto the user, so I started stripping those pieces out. These days it's a lightweight library that just focuses on parsing Nyaa pages, and only depends on two packages: a network stack (httpx) and an HTML parser (beautifulsoup4).
+That made it harder to use in different contexts, since it forced those decisions onto
+the user, so I started stripping those pieces out. These days it's a lightweight library
+that just focuses on parsing Nyaa pages, and only depends on two packages: a network
+stack (httpx) and an HTML parser (beautifulsoup4).
 
-At this point it covers pretty much every field Nyaa exposes and has completely replaced my original scraping code. It returns type-safe, structured objects and works in both sync and async code. Since I rely on it heavily in my own scripts, it has also ended up fairly battle-tested against real-world cases.
+At this point it covers pretty much every field Nyaa exposes and has completely replaced
+my original scraping code. It returns type-safe, structured objects and works in both
+sync and async code. Since I rely on it heavily in my own scripts, it has also ended up
+fairly battle-tested against real-world cases.
 
 ### archivefile
 
