@@ -186,12 +186,25 @@ became an annoying dance of if-else branches to handle the fact that [tarfile][t
 [zipfile][zipfile], [py7zr][py7zr], and [rarfile][rarfile] all behave differently
 despite doing the same basic things. So I wrote `archivefile`.
 
-On a high level, `ArchiveFile` is defined by a protocol with an API that covers the
-common functionality. It’s somewhat inspired by [pathlib][pathlib], which I think is
-great. I then implement this for the aforementioned formats. At runtime, it does a
-single check to dispatch the correct handler, and I no longer have to write boilerplate
-just to read a single file from an archive. It also has a fair amount of tests to ensure
-the handlers produce the same output regardless of the underlying format.
+On a high level, the `ArchiveFile` class is defined by a protocol with an API that
+covers the common functionality. It’s somewhat inspired by [pathlib][pathlib], which I
+think is great. I then implement this for the aforementioned formats. At runtime, it
+does a single check to dispatch the correct handler, and I no longer have to write
+boilerplate just to read a single file from an archive.
+
+In fact, due to this approach, every method under `ArchiveFile` has a single line worth
+of body:
+
+```py
+    def get_member(self, member: StrPath | ArchiveMember) -> ArchiveMember:
+        """
+        <Docstring redacted for brevity>
+        """
+        return self._adapter.get_member(member)
+```
+
+It also has a fair amount of tests to ensure the handlers produce the same output
+regardless of the underlying format.
 
 Developing this led me to find various bugs and missing functionality in [py7zr][py7zr],
 which I fixed [upstream][py7zr-upstream], becoming the
