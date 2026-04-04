@@ -75,7 +75,7 @@ I also ended up post-processing responses because AniList is not particularly co
 
 The first version of this library released with 9 required dependencies. This wasn't a problem for me at the time, but as I worked on more projects I started developing a stronger stance on unnecessary dependencies. For example, a dependency that's slow to update blocks my entire project from updating to the next Python version. So as I worked on this further, I slowly removed most of them, to the point where the latest version only depends on two things: a networking stack (httpx) and a data validation library (msgspec).
 
-On a slight tangent, this is also a project where I really wish Python had some form of [None-aware operator].
+On a slight tangent, this is also a project where I really wish Python had some form of [`None`-aware operator].
 
 [AniList API]: https://docs.anilist.co/
 [`None`-aware operator]: https://peps.python.org/pep-0505/
