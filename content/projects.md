@@ -69,11 +69,13 @@ Still, it has gained more users than I ever expected, likely because to this day
 
 I use the [AniList API] in a lot of scripts to manage my self-hosted collection. For a while I stuck with existing libraries, but issues kept cropping up and I was never really happy with them - most lacked proper type hints, structured objects, or both. Some also seemed entirely unmaintained. After enough `TypeError`s and expressions like `data["Media"][0]["title"]["english"]`, I finally gave up and started writing my own.
 
-How hard can an API wrapper be anyway? Just parse the API and be done with it. Except AniList is GraphQL, with a pretty large surface area, circular relationships, and some awkward response shapes. That probably explains why nobody seemed eager to maintain an AniList library. After thinking about it for a bit, I decided I would rather have an ergonomic API than try to cover everything AniList exposes, so I narrowed things down to the parts I actually needed and focused on making those simple.
+How hard can an API wrapper be anyway? Just parse the API and be done with it. Except AniList is GraphQL, with a pretty large surface area, circular relationships, and some awkward response shapes. That probably explains why nobody seemed eager to maintain an AniList library. After thinking about it, I decided I would rather have an ergonomic API than try to cover everything AniList exposes, so I narrowed things down to what I actually needed and focused on making that simple.
 
-I also ended up post-processing responses because AniList is not particularly consistent. Sometimes "empty" nested objects have every field set to null, sometimes the entire object is just null, and arrays occasionally contain null elements for good measure. The wrapper normalizes these cases so the returned values match the type hints and require fewer None checks.
+I also ended up post-processing responses because AniList is not particularly consistent. Sometimes "empty" nested objects have every field set to null, sometimes the entire object is just null, and arrays occasionally contain null elements. The wrapper normalizes these cases so the returned values match the type hints and require fewer None checks.
 
-On a slight tangent, this is also a project where I really wish Python had some form of [`None`-aware operator].
+The first version of this library released with 9 required dependencies. This wasn't a problem for me at the time, but as I worked on more projects I started developing a stronger stance on unnecessary dependencies. For example, a dependency that's slow to update blocks my entire project from updating to the next Python version. So as I worked on this further, I slowly removed most of them, to the point where the latest version only depends on two things: a networking stack (httpx) and a data validation library (msgspec).
+
+On a slight tangent, this is also a project where I really wish Python had some form of [None-aware operator].
 
 [AniList API]: https://docs.anilist.co/
 [`None`-aware operator]: https://peps.python.org/pep-0505/
