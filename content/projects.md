@@ -232,13 +232,24 @@ great to work with and accepting my PRs.
 
 Possibly one of my favorites. It's a performant, pure Python, dependency free, type-safe
 [spec] compliant parser and meta editor for NZB files following the "make invalid states
-unrepresentable" pattern (well, as long as you stick to the public API because it's
-Python after all) so if you successfully construct it, you know it's a valid NZB
-structure. Beyond that, it also provides various ergonomic methods for introspecting
-itself. I've used it extensively on real world files so i think i can confidently claim
-it's the best NZB parser in Python, however niche that might be.
+unrepresentable" pattern (well, as long as you stick to the public API, because it's
+Python after all), so if you successfully construct it, you know it's a valid NZB
+structure.
+
+Before working on this, I was convinced XML is a scary format and even added a
+dependency, xmltodict, to avoid dealing with it, but as you can imagine the resulting
+dict isn't pleasant to work with. XML just doesn't lend itself well to that kind of
+transformation. After working on the Rust implementation (spoilers), which forced me to
+deal with XML because there wasn't an equivalent to xmltodict, I realized XML isn't
+scary at all. So I dropped xmltodict here as well and switched to the stdlib's
+[`xml.etree.ElementTree`], which is significantly faster and easier to work with.
+
+Beyond that, it also provides various ergonomic methods for introspecting itself. I've
+used it extensively on real world files, so I think I can confidently claim it's the
+best NZB parser in Python, however niche that might be.
 
 [spec]: https://sabnzbd.org/wiki/extra/nzb-spec
+[`xml.etree.ElementTree`]: https://docs.python.org/3/library/xml.etree.elementtree.html
 
 ## seadex
 
