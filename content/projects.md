@@ -338,8 +338,8 @@ closer to the Rust API wherever it made sense.
 
 ## rnzb
 
-_Python bindings to the NZB-rs library - a spec compliant parser for NZB files, written
-in Rust_
+*Python bindings to the NZB-rs library - a spec compliant parser for NZB files, written
+in Rust*
 
 [[GitHub]](https://GitHub.com/Ravencentric/rnzb)
 [[PyPI]](https://pypi.org/project/rnzb/)
@@ -353,32 +353,35 @@ Spoiler alert: yes.
 My goal was simple: a drop-in replacement so existing Python code could immediately
 benefit from the Rust parser.
 
-After a bit of research I found [PyO3], which powers Pydantic and many other
-Rust-powered Python extensions. There were a few small hiccups along the way, but the
-PyO3 docs and maintainers were incredibly helpful whenever I had questions.
+After a bit of research I found [`PyO3`], which powers Pydantic and many other
+Rust-powered Python extensions. This was my first time writing an extension module, but
+thankfully `PyO3` takes care of most of the nitty gritty details and lets me write Rust
+like nothing's changed. Honestly, the maintainers have done an amazing job making this
+so easy I could hardly believe it. There were a few small hiccups along the way, but the
+docs and maintainers were incredibly helpful whenever I had questions.
 
 Once everything worked and the tests passed, the next step was packaging. Wheels are
 prebuilt Python packages so users do not have to compile anything during installation.
-To build wheels for multiple platforms I used [pypa/cibuildwheel], which seems to be
-what most projects rely on for this.
+To build wheels for multiple platforms I used [`pypa/cibuildwheel`], which seems to be
+what most projects rely on.
 
 One interesting detail about extension wheels is Python version compatibility. For
-example: `rnzb-0.6.0-cp314-cp314-win_arm64.whl`. The `cp314-cp314` tag means the wheel
-only works on CPython 3.14. On newer versions the installer falls back to the source
-distribution (sdist) and tries to build it locally, which usually fails unless a Rust
-toolchain is installed.
+example: rnzb-0.6.0-cp314-cp314-win_arm64.whl. The cp314-cp314 tag means the wheel only
+works on CPython 3.14. On newer versions the installer falls back to the source
+distribution and tries to build it locally, which usually fails unless a Rust toolchain
+is installed.
 
 To avoid releasing new wheels for every Python version, I built the extension against
-the [Limited C API] (abi3), which PyO3 supports. The result looks like this:
-`rnzb-0.6.0-cp39-abi3-win_amd64.whl`. The `cp39-abi3` tag means the same wheel works on
+the [Limited C API] (abi3), which `PyO3` supports. The result looks like this:
+rnzb-0.6.0-cp39-abi3-win_amd64.whl. The cp39-abi3 tag means the same wheel works on
 every CPython version starting from Python 3.9.
 
-So yes, the end result was a third NZB parser. But this one is a little different: rnzb
+So yes, the end result was a third NZB parser. But this one is a little different: it
 brings the speed and safety of the Rust implementation to Python while keeping a
-familiar drop-in API. Python users get the fast Rust parser without changing their code.
+familiar drop-in API. You get the Rust parser without changing your code.
 
-[PyO3]: https://pyo3.rs/
-[pypa/cibuildwheel]: https://github.com/pypa/cibuildwheel
+[`PyO3`]: https://pyo3.rs/
+[`pypa/cibuildwheel`]: https://github.com/pypa/cibuildwheel
 [Limited C API]: https://docs.python.org/3/c-api/stable.html#limited-c-api
 
 ## atomicwriter
