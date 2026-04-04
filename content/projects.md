@@ -237,12 +237,13 @@ Python after all), so if you successfully construct it, you know it's a valid NZ
 structure.
 
 Before working on this, I was convinced XML is a scary format and even added a
-dependency, [`xmltodict`], to avoid dealing with it, but as you can imagine the resulting
-dict isn't pleasant to work with. XML just doesn't lend itself well to that kind of
-transformation. After working on the Rust implementation (spoilers), which forced me to
-deal with XML because there wasn't an equivalent to `xmltodict`, I realized XML isn't
-scary at all. So I dropped `xmltodict` here as well and switched to the stdlib's
-[`xml.etree.ElementTree`], which is significantly faster and easier to work with.
+dependency, [`xmltodict`], to avoid dealing with it, but as you can imagine the
+resulting dict isn't pleasant to work with. XML just doesn't lend itself well to that
+kind of transformation. After working on the Rust implementation (spoilers), which
+forced me to deal with XML because there wasn't an equivalent to `xmltodict`, I realized
+XML isn't scary at all. So I dropped `xmltodict` here as well and switched to the
+stdlib's [`xml.etree.ElementTree`], which is significantly faster and easier to work
+with.
 
 Beyond that, it also provides various ergonomic methods for introspecting itself. I've
 used it extensively on real world files, so I think I can confidently claim it's the
@@ -260,8 +261,10 @@ best NZB parser in Python, however niche that might be.
 [[PyPI]](https://pypi.org/project/seadex/)
 [[Docs]](https://ravencentric.cc/seadex/)
 
-Pretty much what it says on the tin. It's a fairly standard API wrapper for [SeaDex]
-following the same ethos as the rest so: type-safe, lazy, efficient.
+Pretty much what it says on the tin. It's a fairly standard API wrapper for [SeaDex].
+There's not much interesting to talk about here. By this point it's my third API
+wrapper, so I had a decent idea of how to approach it. Development ended up being fairly
+uneventful, in a good way.
 
 [SeaDex]: https://releases.moe/about/
 
