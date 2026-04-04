@@ -30,23 +30,34 @@ By the time we get here, I was already deep into self-hosting: Sonarr, Radarr, P
 [[PyPI]](https://pypi.org/project/juicenet-cli/)
 [[Docs]](https://juicenet.ravencentric.cc/)
 
-For all intents and purposes, this was the first piece of code I ever wrote that was
-more complex than Fibonacci. It started off as a [single-file script] that you couldn't even install from PyPI because I had no idea how to package anything.
+For all intents and purposes, this was the first piece of code I ever wrote that was more complex than Fibonacci. It started off as a [single-file script] that you couldn't even install from PyPI because I had no idea how to package anything.
 
-I would be lying if I said I still love this codebase. The best praise I can give it is
-that it works well and is likely one of the few (if not the only) uploaders that preserves
-folders without using [RAR], relying on PAR2 files instead (if you don't know much about
-Usenet, it has no concept of folders).
+If you don't know much about uploading things to usenet, you can't upload folders, only individual files, and you should obfuscate them. Typical workflow is that your uploader splits the file into pieces called "articles" (if you're familiar with torrenting, this is similar), uploads them, and records them in an [NZB] file. Downloaders then use the NZB to grab each article and reconstruct the file. If a single article is lost, deleted, or corrupted, everything breaks, so there are also parity files called [PAR2] which are generated for a given data file and uploaded together, allowing the client to repair the file up to a certain threshold.
 
-But I think I could do way better if I rewrote it from scratch, because that's probably
-the only way I'd get rid of every architectural mistake I made. The problem is that doing
-so would likely break a fair number of users the project has gained, so it's a tough
-choice.
+Now, pretty much all existing Usenet uploaders wrap your file or folder in split, obfuscated RAR archives which then get split into articles. They then write this obfuscated nonsense in the NZB file, which means you can no longer statically parse it to get any metadata. And obfuscating the NZB is worse than useless. You only really wanna obfuscate the data you're uploading, because once you have the NZB you can download the file regardless. The RAR step may have served some purpose 20 years ago but it's entirely wasteful now. It's probably a mix of history, people following existing practices blindly, and the misconception that RARing is necessary for obfuscation and/or preserving a folder.
+
+And you know what else PAR2 files can do? They can rename the file to its original name, which you can use to reconstruct the folder structure. So we no longer need RARs for that. RAR is also unnecessary for obfuscation, since that already happens at the article level. While testing this setup, I also found a [bug] in SABnzbd where it failed to correctly reconstruct the folder structure from PAR2 alone, which got fixed pretty quickly.
+
+Now, I'm not the first one to notice any of this. Everything I've said here I learned from [@animetosho]'s extremely well written article, [Stop RAR Uploads], which goes into more detail. They also happen to maintain the best Usenet tooling there is: [Nyuu] as the uploader, and [ParPar] as the PAR2 generator. Nyuu [doesn't generate PAR2 files by default][#58] and ParPar doesn't preserve anything but the basename by default, which makes sense, as they can't really assume what the user wants.
+
+But I can.
+
+So the next step was familiarizing myself with Nyuu and ParPar. Mostly ParPar, since I had to figure out how to preserve folders with ParPar's [`--filepath-format`] option. After that, I wrote a tiny script that calls ParPar and Nyuu with the correct arguments and called it Juicenet.
+
+The quality of the code in Juicenet hasn't aged well. It's very much a novice's first attempt and it shows.
+
+Still, it has gained more users than I ever expected, likely because to this day it's one of the few, if not the only, high level uploaders that does everything without using RAR archives. I can definitely do way better if I rewrote it from scratch, because that's probably the only way I'd get rid of every architectural mistake I made, but the fact that this has real users means I'll end up breaking them, so it's not exactly an easy choice.
 
 [single-file script]: https://github.com/Ravencentric/juicenet-cli/tree/ceff3b9e97a173795d2a2b1a8a38052997b20e00
-[RAR]: https://github.com/animetosho/Nyuu/wiki/Stop-RAR-Uploads
-
-
+[NZB]: https://en.wikipedia.org/wiki/NZB
+[PAR2]: https://en.wikipedia.org/wiki/Parchive#Par2
+[bug]: https://github.com/sabnzbd/sabnzbd/issues/2626
+[@animetosho]: https://github.com/animetosho
+[Stop RAR Uploads]: https://github.com/animetosho/Nyuu/wiki/Stop-RAR-Uploads
+[Nyuu]: https://github.com/animetosho/Nyuu 
+[ParPar]: https://github.com/animetosho/ParPar 
+[#58]: https://github.com/animetosho/Nyuu/issues/5
+[`--filepath-format`]: https://juicenet.ravencentric.cc/archive/parpar-filepath-formats/
 
 ## pyanilist
 
