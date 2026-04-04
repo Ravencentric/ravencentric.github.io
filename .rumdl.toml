@@ -22,7 +22,6 @@ names = [  # Proper names that should be capitalized correctly
   "Rust",
   "GitHub",
   "API",
-  "NZB",
   "PrivateBin"
 ]
 code-blocks = false  # Check code blocks for proper names (default: false, skips code blocks)

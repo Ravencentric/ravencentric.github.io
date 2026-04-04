@@ -222,7 +222,7 @@ great to work with and accepting my PRs.
 [py7zr-prs]: https://github.com/miurahr/py7zr/pulls?q=is%3Apr+author%3ARavencentric+is%3Aclosed
 [@miurahr]: https://github.com/miurahr
 
-## NZB
+## nzb
 
 *A spec compliant parser and meta editor for NZB files*
 
@@ -270,19 +270,25 @@ uneventful, in a good way.
 
 ## stringenum
 
-_A small, dependency-free library offering additional enum.StrEnum subclasses and a
-backport for older Python versions_
+*A small, dependency-free library offering additional enum.StrEnum subclasses and a
+backport for older Python versions*
 
 [[GitHub]](https://GitHub.com/Ravencentric/stringenum)
 [[PyPI]](https://pypi.org/project/stringenum/)
 
 This was mostly a toy project because I wanted to play with [metaclasses]. It backports
-features from latest Python versions down to 3.9 and provides a bunch of other string
+features from newer Python versions down to 3.9 and provides a bunch of other string
 enums with different properties and guarantees.
 
-[metaclasses]: https://docs.python.org/3/reference/datamodel.html#metaclasses
+The somewhat interesting part here is that the invariants are enforced at construction
+time, so you can always rely on them, and it's fully typed. Typing metaclasses was
+pretty confusing to wrap my head around, but in the end I got it and this library plays
+well with typecheckers.
 
-## NZB-rs
+I wouldn't recommend depending on this library. You should just copy paste the relevant
+parts if you really need them.
+
+## nzb-rs
 
 *A spec compliant parser for NZB files*
 
@@ -290,43 +296,45 @@ enums with different properties and guarantees.
 [[crates.io]](https://crates.io/crates/NZB-rs)
 [[Docs]](https://docs.rs/NZB-rs/latest/NZB_rs/)
 
-Rust had been on my radar for a while. It looked like a fascinating language, so one day
-I finally sat down and read the [Rust book]. Great tooling (cargo), null safety, a
-powerful type system, pattern matching - there was a lot to like. Naturally, I needed a
-project, and parsers seemed like exactly the kind of thing Rust excels at. My
-[NZB parser] was a perfect candidate: it deals with XML, a format with a long history of
-security pitfalls that safe Rust largely avoids by design.
+Rust had been on my radar for a while, so one day I finally sat down and read the
+[Rust book]. Great tooling (cargo), null safety, a powerful type system, pattern
+matching - there was a lot going for it. Naturally, I needed a project, and parsers
+seemed like exactly the kind of thing Rust excels at. My [NZB parser] was a perfect
+candidate: it deals with XML, a format with a long history of security pitfalls that
+safe Rust largely avoids by design.
 
-The experience turned out to be surprisingly smooth. Moving from Python to Rust felt
-quite natural, likely thanks to Rust's zero-cost abstractions that feel just as
-expressive as many Python constructs. Static typing also felt at home since I was
-already a fan of type hints in Python.
+Moving from Python to Rust felt pretty natural, likely thanks to Rust's zero-cost
+abstractions that are just as expressive as many Python constructs. Static typing wasn’t
+new to me either since I was already using type hints in Python.
 
-Traits felt like a more powerful blend of dunder methods, `abc.ABC`, and
-`typing.Protocol`. I miss Rust's enums every time I write Python, and the ergonomic
-`Option<T>` would make any [PEP-505] fans jealous (myself included).
+Traits feel like a more powerful mix of dunder methods, [`abc.ABC`], and
+[`typing.Protocol`]. I miss Rust's enums every time I write Python, and [`Option<T>`]
+would make any [PEP-505] fans jealous (myself included).
 
-Despite its reputation, the borrow checker rarely got in my way. The rules felt
-intuitive: a value has a single owner, and only one mutable reference at a time. I also
-barely had to think about lifetimes since the compiler inferred most of them. Things
-only became rougher when I experimented with async and started running into more cryptic
-borrow-checker errors, but that is a story for another time.
+The borrow checker rarely got in my way. The rules are straightforward: a value has a
+single owner, and only one mutable reference at a time. I also barely had to think about
+lifetimes since the compiler inferred most of them. Things only got rough when I
+experimented with async and started running into more cryptic borrow checker errors, but
+that is a story for another time.
 
-With those impressions in mind, the project itself evolved alongside my understanding of
-Rust. The [first version] of the parser was a fairly direct port of the
-[Python implementation] with an almost identical API. Even so, the Rust version ended up
-being several times faster. Some of that came from Rust itself, but the process also
-highlighted inefficiencies in the Python implementation. After taking those lessons
-back, I was able to remove quite a bit of slower code and narrow the performance gap.
-Later versions of the Rust library evolved into a more idiomatic API. Ironically, the
-Python implementation eventually [adopted] that API as well.
+The project evolved alongside my understanding of Rust. The [first version] of the
+parser was a fairly direct port of the [Python implementation] with an almost identical
+API. Even so, the Rust version ended up being several times faster. Some of that came
+from Rust itself, but the process also highlighted inefficiencies in the Python
+implementation. Taking those lessons back, I was able to remove quite a bit of slower
+code and narrow the performance gap. Later versions of the Rust library evolved into a
+more idiomatic API. Ironically, the Python implementation was eventually [updated] to be
+closer to the Rust API wherever it made sense.
 
 [Rust book]: https://doc.rust-lang.org/book/
 [NZB parser]: https://github.com/Ravencentric/nzb
+[`abc.ABC`]: https://docs.python.org/3/library/abc.html
+[`typing.Protocol`]: https://docs.python.org/3/library/typing.html#typing.Protocol
+[`Option<T>`]: https://doc.rust-lang.org/std/option/
 [PEP-505]: https://peps.python.org/pep-0505/
 [first version]: https://docs.rs/nzb-rs/0.1.0/nzb_rs/
 [Python implementation]: https://github.com/Ravencentric/nzb/blob/v0.3.0/src/nzb/_core.py
-[adopted]: https://github.com/Ravencentric/nzb/releases/tag/v0.4.0
+[updated]: https://github.com/Ravencentric/nzb/releases/tag/v0.4.0
 
 ## rnzb
 
