@@ -182,21 +182,22 @@ fairly battle-tested against real-world cases.
 [[Docs]](https://ravencentric.cc/archivefile/)
 
 I was dealing with archive files of various formats and scripting against them quickly
-became annoying dance of if-else branches to handle the fact that [`tarfile`][tarfile],
-[`zipfile`][zipfile], [`py7zr`][py7zr], and [`rarfile`][rarfile] all behave differently
-given the common denominator of tasks. So I set out to fix this and `archivefile` was
-the result. On a high-level, `ArchieFile` is defined by a protocol, with an API that's
-covers the common functionality and somewhat inspired by [`pathlib`][pathlib] because I
-think [`pathlib`][pathlib] is great, which I implement for the aforementioned formats.
-At runtime, it does a single check to dispatch the correct handler upon initialization
-and I no longer have to write boilerplate to read a single file from an archive. Also
-has a fair amount of tests that ensure the handlers produce the same output regardless
-of the underlying format.
+became an annoying dance of if-else branches to handle the fact that [tarfile][tarfile],
+[zipfile][zipfile], [py7zr][py7zr], and [rarfile][rarfile] all behave differently
+despite doing the same basic things. So I wrote archivefile.
 
-Developing this also led me to find various bugs and missing functionality in
-[`py7zr`][py7zr] which I fixed [upstream][py7zr-upstream], becoming the
+On a high level, `ArchiveFile` is defined by a protocol with an API that covers the
+common functionality. It’s somewhat inspired by [pathlib][pathlib], which I think is
+great. I then implement this for the aforementioned formats. At runtime, it does a
+single check to dispatch the correct handler, and I no longer have to write boilerplate
+just to read a single file from an archive. It also has a fair amount of tests to ensure
+the handlers produce the same output regardless of the underlying format.
+
+Developing this led me to find various bugs and missing functionality in [py7zr][py7zr],
+which I fixed [upstream][py7zr-upstream], becoming the
 [second highest committer on the project][py7zr-contributors] with
-[15 or so merged PRs][py7zr-prs].
+[15 or so merged PRs][py7zr-prs]. Thanks to the py7zr maintainer, [@miurahr], for being
+great to work with and accepting my PRs.
 
 [tarfile]: https://docs.python.org/3/library/tarfile.html
 [zipfile]: https://docs.python.org/3/library/zipfile.html
@@ -206,6 +207,7 @@ Developing this also led me to find various bugs and missing functionality in
 [py7zr-upstream]: https://github.com/miurahr/py7zr
 [py7zr-contributors]: https://github.com/miurahr/py7zr/graphs/contributors
 [py7zr-prs]: https://github.com/miurahr/py7zr/pulls?q=is%3Apr+author%3ARavencentric+is%3Aclosed
+[@miurahr]: https://github.com/miurahr
 
 ## NZB
 
