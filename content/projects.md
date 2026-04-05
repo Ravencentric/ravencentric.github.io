@@ -410,8 +410,8 @@ Python API, added some tests, and published it with abi3 wheels.
 
 ## PrivateBin
 
-_Python library for interacting with PrivateBin's v2 API (PrivateBin >= 1.3) to create,
-retrieve, and delete encrypted pastes._
+*Python library for interacting with PrivateBin's v2 API (PrivateBin >= 1.3) to create,
+retrieve, and delete encrypted pastes.*
 
 [[GitHub]](https://github.com/Ravencentric/PrivateBin)
 [[PyPI]](https://pypi.org/project/PrivateBin/)
