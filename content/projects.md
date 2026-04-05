@@ -480,12 +480,11 @@ I've used it extensively on real-world files, and it has held up well so far.
 [[Docs]](https://ravencentric.cc/mkvinfo/)
 
 I needed a way to introspect MKV files so I could classify them further. [`mkvmerge`]
-already exposes a lot of useful metadata, but consuming that output directly from Python
-gets annoying pretty quickly.
+can already introspect MKV files and return the result as JSON, but consuming that
+output directly from Python gets annoying pretty quickly.
 
-So this library is basically a thin wrapper around that. It runs `mkvmerge -J` and turns
-the JSON output into typed Python objects so you can easily inspect tracks, codecs, and
-other metadata.
+This library is basically a thin wrapper around that. It runs `mkvmerge -J` and turns
+the JSON output into typed Python objects so I don’t have to deal with it myself.
 
 [`mkvmerge`]: https://mkvtoolnix.download/doc/mkvmerge.html
 
