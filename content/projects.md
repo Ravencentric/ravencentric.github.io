@@ -14,7 +14,7 @@ some grow into libraries.
 
 *A collection of *arrs and related stuff*
 
-[[GitHub]](https://GitHub.com/Ravencentric/awesome-arr)
+[[GitHub]](https://github.com/Ravencentric/awesome-arr)
 
 Essentially my first project on GitHub, which didn’t involve any code whatsoever.
 
@@ -31,7 +31,7 @@ stars on GitHub.
 
 *CLI tool designed to simplify the process of uploading files to Usenet*
 
-[[GitHub]](https://GitHub.com/Ravencentric/juicenet-cli)
+[[GitHub]](https://github.com/Ravencentric/juicenet-cli)
 [[PyPI]](https://pypi.org/project/juicenet-cli/)
 [[Docs]](https://juicenet.ravencentric.cc/)
 
@@ -105,7 +105,7 @@ easy choice.
 
 *Python wrapper for the AniList API*
 
-[[GitHub]](https://GitHub.com/Ravencentric/pyanilist)
+[[GitHub]](https://github.com/Ravencentric/pyanilist)
 [[PyPI]](https://pypi.org/project/pyanilist/)
 [[Docs]](https://ravencentric.cc/pyanilist/)
 
@@ -146,7 +146,7 @@ On a slight tangent, this is also a project where I really wish Python had some 
 
 *Turn nyaa.si torrent pages into neat Python objects*
 
-[[GitHub]](https://GitHub.com/Ravencentric/pynyaa)
+[[GitHub]](https://github.com/Ravencentric/pynyaa)
 [[PyPI]](https://pypi.org/project/pynyaa/)
 [[Docs]](https://ravencentric.cc/pynyaa/)
 
@@ -177,7 +177,7 @@ fairly battle-tested against real-world cases.
 
 *Unified interface for tar, zip, sevenzip, and rar files*
 
-[[GitHub]](https://GitHub.com/Ravencentric/archivefile)
+[[GitHub]](https://github.com/Ravencentric/archivefile)
 [[PyPI]](https://pypi.org/project/archivefile/)
 [[Docs]](https://ravencentric.cc/archivefile/)
 
@@ -226,7 +226,7 @@ great to work with and accepting my PRs.
 
 *A spec compliant parser and meta editor for NZB files*
 
-[[GitHub]](https://GitHub.com/Ravencentric/NZB)
+[[GitHub]](https://github.com/Ravencentric/NZB)
 [[PyPI]](https://pypi.org/project/NZB/)
 [[Docs]](https://ravencentric.cc/NZB/)
 
@@ -257,7 +257,7 @@ best NZB parser in Python, however niche that might be.
 
 *Python wrapper for the SeaDex API*
 
-[[GitHub]](https://GitHub.com/Ravencentric/seadex)
+[[GitHub]](https://github.com/Ravencentric/seadex)
 [[PyPI]](https://pypi.org/project/seadex/)
 [[Docs]](https://ravencentric.cc/seadex/)
 
@@ -273,7 +273,7 @@ uneventful, in a good way.
 *A small, dependency-free library offering additional enum.StrEnum subclasses and a
 backport for older Python versions*
 
-[[GitHub]](https://GitHub.com/Ravencentric/stringenum)
+[[GitHub]](https://github.com/Ravencentric/stringenum)
 [[PyPI]](https://pypi.org/project/stringenum/)
 
 This was mostly a toy project because I wanted to play with [metaclasses]. It backports
@@ -294,7 +294,7 @@ parts if you really need them.
 
 *A spec compliant parser for NZB files*
 
-[[GitHub]](https://GitHub.com/Ravencentric/NZB-rs)
+[[GitHub]](https://github.com/Ravencentric/NZB-rs)
 [[crates.io]](https://crates.io/crates/NZB-rs)
 [[Docs]](https://docs.rs/NZB-rs/latest/NZB_rs/)
 
@@ -343,7 +343,7 @@ closer to the Rust API wherever it made sense.
 *Python bindings to the NZB-rs library - a spec compliant parser for NZB files, written
 in Rust*
 
-[[GitHub]](https://GitHub.com/Ravencentric/rnzb)
+[[GitHub]](https://github.com/Ravencentric/rnzb)
 [[PyPI]](https://pypi.org/project/rnzb/)
 
 A third NZB parser? Yes. At this point I might have a problem.
@@ -390,7 +390,7 @@ familiar drop-in API. You get the Rust parser without changing your code.
 
 *Cross-platform atomic file writer for all-or-nothing operations.*
 
-[[GitHub]](https://GitHub.com/Ravencentric/atomicwriter)
+[[GitHub]](https://github.com/Ravencentric/atomicwriter)
 [[PyPI]](https://pypi.org/project/atomicwriter/)
 [[Docs]](https://ravencentric.cc/atomicwriter/)
 
@@ -413,7 +413,7 @@ Python API, added some tests, and published it with abi3 wheels.
 _Python library for interacting with PrivateBin's v2 API (PrivateBin >= 1.3) to create,
 retrieve, and delete encrypted pastes._
 
-[[GitHub]](https://GitHub.com/Ravencentric/PrivateBin)
+[[GitHub]](https://github.com/Ravencentric/PrivateBin)
 [[PyPI]](https://pypi.org/project/PrivateBin/)
 [[Docs]](https://ravencentric.cc/PrivateBin/)
 
@@ -449,7 +449,7 @@ straightforward, and it doesn’t depend on another PrivateBin library.
 
 *Parser for manga and light novel filenames*
 
-[[GitHub]](https://GitHub.com/Ravencentric/myne)
+[[GitHub]](https://github.com/Ravencentric/myne)
 [[PyPI]](https://pypi.org/project/myne/)
 [[Docs]](https://ravencentric.cc/myne/)
 
@@ -475,7 +475,7 @@ I've used it extensively on real-world files, and it has held up well so far.
 
 *Python library for probing matroska files with mkvmerge*
 
-[[GitHub]](https://GitHub.com/Ravencentric/mkvinfo)
+[[GitHub]](https://github.com/Ravencentric/mkvinfo)
 [[PyPI]](https://pypi.org/project/mkvinfo/)
 [[Docs]](https://ravencentric.cc/mkvinfo/)
 
@@ -492,13 +492,13 @@ the JSON output into typed Python objects so I don’t have to deal with it myse
 
 *misaki is a fast, asynchronous link checker with optional FlareSolverr support.*
 
-[[GitHub]](https://GitHub.com/Ravencentric/misaki)
+[[GitHub]](https://github.com/Ravencentric/misaki)
 [[crates.io: misaki-core]](https://crates.io/crates/misaki-core)
 [[crates.io: misaki-cli]](https://crates.io/crates/misaki-cli)
 [[Docs]](https://docs.rs/misaki_core/latest/misaki_core/)
 
-A good friend of mine wanted a link checker with [FlareSolverr] support. A link checker is
-a pretty easy project, and it was an excuse to try out async Rust.
+A good friend of mine wanted a link checker with [FlareSolverr] support. A link checker
+is a pretty easy project, and it was an excuse to try out async Rust.
 
 This was the first time Rust actually felt like a pain. The errors got quite a bit more
 cryptic, and async support still feels somewhat incomplete.
@@ -508,8 +508,27 @@ way to "yield" values from async code, so you end up relying on third-party crat
 [`async-stream`] to emulate async generators. There is also no async drop, which makes
 cleaning up async resources harder than it should be.
 
-It’s not all bad though. After simply .clone()ing my issues away, I ended up with a
+It’s not all bad though. After simply `.clone()`ing my issues away, I ended up with a
 really fast link checker.
 
 [FlareSolverr]: https://github.com/FlareSolverr/FlareSolverr
 [`async-stream`]: https://docs.rs/async-stream/latest/async_stream/
+
+## ravencentric.GitHub.io
+
+[[GitHub]](https://github.com/Ravencentric/ravencentric.github.io)
+
+Well, that’s this site. My apex domain had been sitting unused for a while (my project
+docs already live at `$domain/$project`), and a home page was pretty much the only thing
+I could put here, so that’s what it is.
+
+It’s a static site built with [Hugo] and hosted on [GitHub Pages]. The theme is
+[clente/hugo-bearcub] because it’s simple, does everything I need (pretty codeblocks),
+is JavaScript-free, and comes in under 10KB.
+
+There’s not much else to add here since I didn’t really do anything beyond taking some
+off-the-shelf pieces and putting them together.
+
+[Hugo]: https://github.com/gohugoio/hugo
+[GitHub Pages]: https://docs.github.com/en/pages
+[clente/hugo-bearcub]: https://github.com/clente/hugo-bearcub
