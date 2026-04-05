@@ -288,6 +288,8 @@ well with typecheckers.
 I wouldn't recommend depending on this library. You should just copy paste the relevant
 parts if you really need them.
 
+[metaclasses]: https://docs.python.org/3/reference/datamodel.html#metaclasses
+
 ## nzb-rs
 
 *A spec compliant parser for NZB files*
