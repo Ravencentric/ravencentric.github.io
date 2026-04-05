@@ -16,7 +16,7 @@ some grow into libraries.
 
 [[GitHub]](https://github.com/Ravencentric/awesome-arr)
 
-Essentially my first project on GitHub, which didn’t involve any code whatsoever.
+Essentially my first project on GitHub, which didn't involve any code whatsoever.
 
 By the time we get here, I was already deep into self-hosting: Sonarr, Radarr, Plex,
 etc. During this time, I came across a cool repository, [rustyshackleford36/locatarr],
@@ -39,7 +39,7 @@ For all intents and purposes, this was the first piece of code I ever wrote that
 more complex than Fibonacci. It started off as a [single-file script] that you couldn't
 even install from PyPI because I had no idea how to package anything.
 
-If you don't know much about uploading things to usenet, you can't upload folders, only
+If you don't know much about uploading to usenet: you can't upload folders, only
 individual files, and you should obfuscate them. Typical workflow is that your uploader
 splits the file into pieces called "articles" (if you're familiar with torrenting, this
 is similar), uploads them, and records them in an [NZB] file. Downloaders then use the
@@ -52,7 +52,7 @@ Now, pretty much all existing Usenet uploaders wrap your file or folder in split
 obfuscated RAR archives which then get split into articles. They then write this
 obfuscated nonsense in the NZB file, which means you can no longer statically parse it
 to get any metadata. And obfuscating the NZB is worse than useless. You only really
-wanna obfuscate the data you're uploading, because once you have the NZB you can
+wanna obfuscate the data, because once you have the NZB you can
 download the file regardless. The RAR step may have served some purpose 20 years ago but
 it's entirely wasteful now. It's probably a mix of history, people following existing
 practices blindly, and the misconception that RARing is necessary for obfuscation and/or
@@ -98,7 +98,7 @@ easy choice.
 [Stop RAR Uploads]: https://github.com/animetosho/Nyuu/wiki/Stop-RAR-Uploads
 [Nyuu]: https://github.com/animetosho/Nyuu
 [ParPar]: https://github.com/animetosho/ParPar
-[#58]: https://github.com/animetosho/Nyuu/issues/5
+[#58]: https://github.com/animetosho/Nyuu/issues/58
 [`--filepath-format`]: https://juicenet.ravencentric.cc/archive/parpar-filepath-formats/
 
 ## pyanilist
@@ -156,8 +156,8 @@ API. I looked around for existing libraries but didn't find anything satisfactor
 So I wrote a small function that parsed the page for the few fields I needed. That
 worked for a while, but it kept growing as I needed more metadata from Nyaa. At some
 point it started hitting quirks of how the site represents things (a release can be both
-trusted and a remake, but since the panel only has a single color it ends up red), and
-eventually it got messy enough that I decided to turn it into a standalone library.
+trusted and a remake, but since the panel only has a single color, it just ends up red),
+and eventually it got messy enough that I decided to turn it into a standalone library.
 
 The first release tried to do too much and ended up with about ten dependencies. It
 handled caching, parsed torrent files, used pydantic despite already validating
@@ -173,7 +173,7 @@ my original scraping code. It returns type-safe, structured objects and works in
 sync and async code. Since I rely on it heavily in my own scripts, it has also ended up
 fairly battle-tested against real-world cases.
 
-### archivefile
+## archivefile
 
 *Unified interface for tar, zip, sevenzip, and rar files*
 
@@ -187,7 +187,7 @@ became an annoying dance of if-else branches to handle the fact that [tarfile][t
 despite doing the same basic things. So I wrote `archivefile`.
 
 On a high level, the `ArchiveFile` class is defined by a protocol with an API that
-covers the common functionality. It’s somewhat inspired by [pathlib][pathlib], which I
+covers the common functionality. It's somewhat inspired by [pathlib][pathlib], which I
 think is great. I then implement this for the aforementioned formats. At runtime, it
 does a single check to dispatch the correct handler, and I no longer have to write
 boilerplate just to read a single file from an archive.
@@ -306,7 +306,7 @@ candidate: it deals with XML, a format with a long history of security pitfalls 
 safe Rust largely avoids by design.
 
 Moving from Python to Rust felt pretty natural, likely thanks to Rust's zero-cost
-abstractions that are just as expressive as many Python constructs. Static typing wasn’t
+abstractions that are just as expressive as many Python constructs. Static typing wasn't
 new to me either since I was already using type hints in Python.
 
 Traits feel like a more powerful mix of dunder methods, [`abc.ABC`], and
@@ -370,8 +370,8 @@ what most projects rely on.
 One interesting detail about extension wheels is Python version compatibility. For
 example: `rnzb-0.6.0-cp314-cp314-win_arm64.whl`. The `cp314-cp314` tag means the wheel
 only works on CPython 3.14. On newer versions the installer falls back to the source
-distribution and tries to build it locally, which usually fails unless a Rust toolchain
-is installed.
+distribution and tries to build it locally, which usually fails without a Rust
+toolchain.
 
 To avoid releasing new wheels for every Python version, I built the extension against
 the [Limited C API] (abi3), which `PyO3` supports. The result looks like this:
@@ -429,7 +429,7 @@ and returns the encrypted blob, so the client has to handle both encryption and
 decryption.
 
 Unfortunately (and maybe this was just me being dumb), the PrivateBin documentation did
-not help much here. So I started digging through the source code of PrivateBinAPI to
+not help much here. So I started digging through the source code of [`PrivateBinAPI`] to
 figure out how it handled things.
 
 Turns out... it doesn't. It depends on another library, [`PBinCLI`], to actually do the
@@ -438,7 +438,7 @@ talking to PrivateBin.
 So I went and read that code instead. After a few hours of trial, error, and carefully
 extracting pieces of logic, I eventually isolated the core encryption and decryption
 routines. Once that part was figured out, the rest of the client was fairly
-straightforward, and it doesn’t depend on another PrivateBin library.
+straightforward, and it doesn't depend on another PrivateBin library.
 
 [PrivateBin]: https://privatebin.info/
 [`PrivateBinAPI`]: https://github.com/Pioverpie/privatebin-api/
@@ -484,7 +484,7 @@ can already introspect MKV files and return the result as JSON, but consuming th
 output directly from Python gets annoying pretty quickly.
 
 This library is basically a thin wrapper around that. It runs `mkvmerge -J` and turns
-the JSON output into typed Python objects so I don’t have to deal with it myself.
+the JSON output into typed Python objects so I don't have to deal with it myself.
 
 [`mkvmerge`]: https://mkvtoolnix.download/doc/mkvmerge.html
 
@@ -508,7 +508,7 @@ way to "yield" values from async code, so you end up relying on third-party crat
 [`async-stream`] to emulate async generators. There is also no async drop, which makes
 cleaning up async resources harder than it should be.
 
-It’s not all bad though. After simply `.clone()`ing my issues away, I ended up with a
+It's not all bad though. After simply `.clone()`ing my issues away, I ended up with a
 really fast link checker.
 
 [FlareSolverr]: https://github.com/FlareSolverr/FlareSolverr
@@ -518,15 +518,15 @@ really fast link checker.
 
 [[GitHub]](https://github.com/Ravencentric/ravencentric.github.io)
 
-Well, that’s this site. My apex domain had been sitting unused for a while (my project
+Well, that's this site. My apex domain had been sitting unused for a while (my project
 docs already live at `$domain/$project`), and a home page was pretty much the only thing
-I could put here, so that’s what it is.
+I could put here, so that's what it is.
 
-It’s a static site built with [Hugo] and hosted on [GitHub Pages]. The theme is
-[clente/hugo-bearcub] because it’s simple, does everything I need (pretty codeblocks),
+It's a static site built with [Hugo] and hosted on [GitHub Pages]. The theme is
+[clente/hugo-bearcub] because it's simple, does everything I need (pretty codeblocks),
 is JavaScript-free, and comes in under 10KB.
 
-There’s not much else to add here since I didn’t really do anything beyond taking some
+There's not much else to add here since I didn't really do anything beyond taking some
 off-the-shelf pieces and putting them together.
 
 [Hugo]: https://github.com/gohugoio/hugo
