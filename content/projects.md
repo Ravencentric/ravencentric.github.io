@@ -455,7 +455,7 @@ straightforward, and it doesn’t depend on another PrivateBin library.
 
 Manga and light novel filenames are a mess. Well, mostly. The big release groups tend to
 follow pretty consistent naming schemes, but everything else is all over the place,
-especially Korean manhwa releases. There's no anitopy equivalent for manga and light
+especially Korean manhwa releases. There's no [`anitopy`] equivalent for manga and light
 novels, so I ended up writing my own parser to turn them into structured metadata like
 title, volume, and chapter.
 
@@ -468,6 +468,7 @@ loves books. I'm still pretty proud of that one.
 
 I've used it extensively on real-world files, and it has held up well so far.
 
+[`anitopy`]: https://pypi.org/project/anitopy/
 [Ascendance of a Bookworm]: https://j-novel.club/series/ascendance-of-a-bookworm
 
 ## mkvinfo
