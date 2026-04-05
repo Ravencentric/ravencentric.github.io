@@ -514,7 +514,7 @@ really fast link checker.
 [FlareSolverr]: https://github.com/FlareSolverr/FlareSolverr
 [`async-stream`]: https://docs.rs/async-stream/latest/async_stream/
 
-## ravencentric.GitHub.io
+## ravencentric.github.io
 
 [[GitHub]](https://github.com/Ravencentric/ravencentric.github.io)
 
