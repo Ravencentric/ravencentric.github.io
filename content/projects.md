@@ -453,18 +453,20 @@ straightforward, and it doesn’t depend on another PrivateBin library.
 [[PyPI]](https://pypi.org/project/myne/)
 [[Docs]](https://ravencentric.cc/myne/)
 
-I was surprised I couldn't find a library that parsed manga and light novel filenames
-into structured metadata like title, volume, and chapter.
+Manga and light novel filenames are a mess. Well, mostly. The big release groups tend to
+follow pretty consistent naming schemes, but everything else is all over the place,
+especially Korean manhwa releases. There's no anitopy equivalent for manga and light
+novels, so I ended up writing my own parser to turn them into structured metadata like
+title, volume, and chapter.
 
-It's written in Rust with simple Python bindings. Under the hood it is entirely
-regex-based, and if you peek inside you will find some pretty gnarly expressions. Manga
-and light novels do not follow any real naming standard, so everything is based on
-convention. You would be surprised how terrible some of these filenames can get.
+It's a Python library written in Rust, and under the hood it is entirely regex-based. It
+matches the most specific patterns first and removes them from the filename, then moves
+on to more ambiguous ones. Whatever is left at the end is treated as the title.
 
 The name "myne" comes from the main character of [Ascendance of a Bookworm], who really
 loves books. I'm still pretty proud of that one.
 
-Despite that, myne has parsed every real-world filename I have thrown at it so far.
+I've used it extensively on real-world files, and it has held up well so far.
 
 [Ascendance of a Bookworm]: https://j-novel.club/series/ascendance-of-a-bookworm
 
