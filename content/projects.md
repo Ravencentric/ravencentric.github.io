@@ -497,14 +497,19 @@ the JSON output into typed Python objects so I don’t have to deal with it myse
 [[crates.io: misaki-cli]](https://crates.io/crates/misaki-cli)
 [[Docs]](https://docs.rs/misaki_core/latest/misaki_core/)
 
-A good friend of mine wanted a link checker with flaresolverr support, so I wrote one.
-Now, a link checker is a pretty easy project and it was a perfect excuse to try out
-async Rust and this was the first time Rust felt like a pain. The errors got quite a bit
-cryptic and it felt like async support is still somewhat incomplete.
+A good friend of mine wanted a link checker with [FlareSolverr] support. A link checker is
+a pretty easy project, and it was an excuse to try out async Rust.
+
+This was the first time Rust actually felt like a pain. The errors got quite a bit more
+cryptic, and async support still feels somewhat incomplete.
 
 Some patterns that should be simple end up awkward. For example, there is no built-in
-way to “yield” values from async code, so you end up relying on third-party crates like
+way to "yield" values from async code, so you end up relying on third-party crates like
 [`async-stream`] to emulate async generators. There is also no async drop, which makes
 cleaning up async resources harder than it should be.
 
+It’s not all bad though. After simply .clone()ing my issues away, I ended up with a
+really fast link checker.
+
+[FlareSolverr]: https://github.com/FlareSolverr/FlareSolverr
 [`async-stream`]: https://docs.rs/async-stream/latest/async_stream/
