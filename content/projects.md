@@ -368,8 +368,8 @@ To build wheels for multiple platforms I used [`pypa/cibuildwheel`], which seems
 what most projects rely on.
 
 One interesting detail about extension wheels is Python version compatibility. For
-example: `rnzb-0.6.0-cp314-cp314-win_arm64.whl`. The `cp314-cp314` tag means the wheel only
-works on CPython 3.14. On newer versions the installer falls back to the source
+example: `rnzb-0.6.0-cp314-cp314-win_arm64.whl`. The `cp314-cp314` tag means the wheel
+only works on CPython 3.14. On newer versions the installer falls back to the source
 distribution and tries to build it locally, which usually fails unless a Rust toolchain
 is installed.
 
@@ -394,13 +394,12 @@ familiar drop-in API. You get the Rust parser without changing your code.
 [[PyPI]](https://pypi.org/project/atomicwriter/)
 [[Docs]](https://ravencentric.cc/atomicwriter/)
 
-Every now and then I run into situations where I need to write something atomically.
-There used to be a package for this, [`python-atomicwrites`], but it is unmaintained
-now.
+Every now and then I need to write something atomically. There used to be a package for
+this, [`python-atomicwrites`], but it is unmaintained now.
 
-I am by no means an expert in file system behavior across different platforms, but I
-knew of a library that was: Rust's [`tempfile`] crate. It already implements atomic
-writes (and a lot more) correctly across platforms.
+I am not an expert in file system behavior across different platforms, but I knew of
+one: Rust's [`tempfile`] crate. It already implements atomic writes (and a lot more)
+across platforms. I also wanted an excuse to use more Rust, so this was a good fit.
 
 Thanks to everything I learned from my previous projects, this one was fairly
 straightforward. I wrote a thin wrapper around the Rust library, exposed an idiomatic
@@ -419,34 +418,32 @@ retrieve, and delete encrypted pastes._
 [[Docs]](https://ravencentric.cc/PrivateBin/)
 
 I regularly use an instance of [PrivateBin] to temporarily and securely store logs from
-various scripts. Initially I used the [PrivateBinAPI] package. It had incomplete type
+various scripts. Initially I used the [`PrivateBinAPI`] package. It had incomplete type
 hints and I was not a fan of the API, but it worked... until it [didn't].
 
 So I set out to write one from scratch.
 
-PrivateBin never actually sees your paste. Everything is encrypted client-side before
-being sent to the server, which only stores and returns the encrypted blob. The client
-therefore has to handle both encryption and decryption.
+One of the defining features of PrivateBin is that it never actually sees your paste.
+Everything is encrypted client-side before being sent to the server, which only stores
+and returns the encrypted blob, so the client has to handle both encryption and
+decryption.
 
 Unfortunately (and maybe this was just me being dumb), the PrivateBin documentation did
-not help much here. So I started digging through the source code of [PrivateBinAPI] to
-figure out how it handled the protocol and encryption.
+not help much here. So I started digging through the source code of PrivateBinAPI to
+figure out how it handled things.
 
-Turns out... it doesn't. It depends on another PrivateBin library, [PBinCLI], to
-actually do the talking to PrivateBin.
+Turns out... it doesn't. It depends on another library, [`PBinCLI`], to actually do the
+talking to PrivateBin.
 
 So I went and read that code instead. After a few hours of trial, error, and carefully
 extracting pieces of logic, I eventually isolated the core encryption and decryption
-routines. Once that part was figured out, implementing the rest of the client was fairly
-straightforward.
-
-The result is a small, typed PrivateBin client with a clean API and no dependency on
-another PrivateBin library.
+routines. Once that part was figured out, the rest of the client was fairly
+straightforward, and it doesn’t depend on another PrivateBin library.
 
 [PrivateBin]: https://privatebin.info/
-[PrivateBinAPI]: https://github.com/Pioverpie/privatebin-api/
+[`PrivateBinAPI`]: https://github.com/Pioverpie/privatebin-api/
 [didn't]: https://github.com/Pioverpie/privatebin-api/issues/12
-[PBinCLI]: https://github.com/r4sas/PBinCLI
+[`PBinCLI`]: https://github.com/r4sas/PBinCLI
 
 ## myne
 
