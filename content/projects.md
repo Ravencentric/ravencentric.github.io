@@ -368,14 +368,14 @@ To build wheels for multiple platforms I used [`pypa/cibuildwheel`], which seems
 what most projects rely on.
 
 One interesting detail about extension wheels is Python version compatibility. For
-example: rnzb-0.6.0-cp314-cp314-win_arm64.whl. The cp314-cp314 tag means the wheel only
+example: `rnzb-0.6.0-cp314-cp314-win_arm64.whl`. The `cp314-cp314` tag means the wheel only
 works on CPython 3.14. On newer versions the installer falls back to the source
 distribution and tries to build it locally, which usually fails unless a Rust toolchain
 is installed.
 
 To avoid releasing new wheels for every Python version, I built the extension against
 the [Limited C API] (abi3), which `PyO3` supports. The result looks like this:
-rnzb-0.6.0-cp39-abi3-win_amd64.whl. The cp39-abi3 tag means the same wheel works on
+`rnzb-0.6.0-cp39-abi3-win_amd64.whl`. The `cp39-abi3` tag means the same wheel works on
 every CPython version starting from Python 3.9.
 
 So yes, the end result was a third NZB parser. But this one is a little different: it
