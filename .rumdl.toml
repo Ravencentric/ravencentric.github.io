@@ -20,7 +20,7 @@ names = [  # Proper names that should be capitalized correctly
   "CPython",
   "Python",
   "Rust",
-  # "GitHub", https://github.com/rvben/rumdl/issues/564
+  # "GitHub", https://github.com/rvben/rumdl/issues/567
   "API",
   "PrivateBin"
 ]
