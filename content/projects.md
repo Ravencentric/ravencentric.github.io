@@ -5,12 +5,36 @@ weight: 3
 hideReply: true
 ---
 
-Most of my projects start as small tools to solve problems I run into. Some stay small,
-some grow into libraries.
+A chronologically sorted list of my projects. This doesn’t cover *every* project I’ve
+worked on, but it does cover every project I wanted to talk about.
+
+- [2022](#2022)
+  - [awesome-arr](#awesome-arr)
+- [2023](#2023)
+  - [juicenet-cli](#juicenet-cli)
+- [2024](#2024)
+  - [pyanilist](#pyanilist)
+  - [pynyaa](#pynyaa)
+  - [archivefile](#archivefile)
+  - [nzb](#nzb)
+  - [seadex](#seadex)
+  - [stringenum](#stringenum)
+- [2025](#2025)
+  - [nzb-rs](#nzb-rs)
+  - [rnzb](#rnzb)
+  - [atomicwriter](#atomicwriter)
+  - [PrivateBin](#privatebin)
+  - [myne](#myne)
+  - [mkvinfo](#mkvinfo)
+  - [misaki](#misaki)
+- [2026](#2026)
+  - [ravencentric.github.io](#ravencentricgithubio)
 
 ---
 
-## awesome-arr
+## 2022
+
+### awesome-arr
 
 *A collection of *arrs and related stuff*
 
@@ -27,7 +51,9 @@ stars on GitHub.
 
 [rustyshackleford36/locatarr]: http://web.archive.org/web/20220913033723/https://github.com/rustyshackleford36/locatarr
 
-## juicenet-cli
+## 2023
+
+### juicenet-cli
 
 *CLI tool designed to simplify the process of uploading files to Usenet*
 
@@ -101,7 +127,9 @@ easy choice.
 [#58]: https://github.com/animetosho/Nyuu/issues/58
 [`--filepath-format`]: https://juicenet.ravencentric.cc/archive/parpar-filepath-formats/
 
-## pyanilist
+## 2024
+
+### pyanilist
 
 *Python wrapper for the AniList API*
 
@@ -142,7 +170,7 @@ On a slight tangent, this is also a project where I really wish Python had some 
 [AniList API]: https://docs.anilist.co/
 [`None`-aware operator]: https://peps.python.org/pep-0505/
 
-## pynyaa
+### pynyaa
 
 *Turn nyaa.si torrent pages into neat Python objects*
 
@@ -173,7 +201,7 @@ my original scraping code. It returns type-safe, structured objects and works in
 sync and async code. Since I rely on it heavily in my own scripts, it has also ended up
 fairly battle-tested against real-world cases.
 
-## archivefile
+### archivefile
 
 *Unified interface for tar, zip, sevenzip, and rar files*
 
@@ -222,7 +250,7 @@ great to work with and accepting my PRs.
 [py7zr-prs]: https://github.com/miurahr/py7zr/pulls?q=is%3Apr+author%3ARavencentric+is%3Aclosed
 [@miurahr]: https://github.com/miurahr
 
-## nzb
+### nzb
 
 *A spec compliant parser and meta editor for NZB files*
 
@@ -253,7 +281,7 @@ best NZB parser in Python, however niche that might be.
 [`xmltodict`]: https://pypi.org/project/xmltodict/
 [`xml.etree.ElementTree`]: https://docs.python.org/3/library/xml.etree.elementtree.html
 
-## seadex
+### seadex
 
 *Python wrapper for the SeaDex API*
 
@@ -268,7 +296,7 @@ uneventful, in a good way.
 
 [SeaDex]: https://releases.moe/about/
 
-## stringenum
+### stringenum
 
 *A small, dependency-free library offering additional enum.StrEnum subclasses and a
 backport for older Python versions*
@@ -290,7 +318,9 @@ parts if you really need them.
 
 [metaclasses]: https://docs.python.org/3/reference/datamodel.html#metaclasses
 
-## nzb-rs
+## 2025
+
+### nzb-rs
 
 *A spec compliant parser for NZB files*
 
@@ -338,7 +368,7 @@ closer to the Rust API wherever it made sense.
 [Python implementation]: https://github.com/Ravencentric/nzb/blob/v0.3.0/src/nzb/_core.py
 [updated]: https://github.com/Ravencentric/nzb/releases/tag/v0.4.0
 
-## rnzb
+### rnzb
 
 *Python bindings to the NZB-rs library - a spec compliant parser for NZB files, written
 in Rust*
@@ -386,7 +416,7 @@ familiar drop-in API. You get the Rust parser without changing your code.
 [`pypa/cibuildwheel`]: https://github.com/pypa/cibuildwheel
 [Limited C API]: https://docs.python.org/3/c-api/stable.html#limited-c-api
 
-## atomicwriter
+### atomicwriter
 
 *Cross-platform atomic file writer for all-or-nothing operations.*
 
@@ -408,7 +438,7 @@ Python API, added some tests, and published it with abi3 wheels.
 [`python-atomicwrites`]: https://github.com/untitaker/python-atomicwrites
 [`tempfile`]: https://docs.rs/tempfile/latest/tempfile/
 
-## PrivateBin
+### PrivateBin
 
 *Python library for interacting with PrivateBin's v2 API (PrivateBin >= 1.3) to create,
 retrieve, and delete encrypted pastes.*
@@ -445,7 +475,7 @@ straightforward, and it doesn't depend on another PrivateBin library.
 [didn't]: https://github.com/Pioverpie/privatebin-api/issues/12
 [`PBinCLI`]: https://github.com/r4sas/PBinCLI
 
-## myne
+### myne
 
 *Parser for manga and light novel filenames*
 
@@ -471,7 +501,7 @@ I've used it extensively on real-world files, and it has held up well so far.
 [`anitopy`]: https://pypi.org/project/anitopy/
 [Ascendance of a Bookworm]: https://j-novel.club/series/ascendance-of-a-bookworm
 
-## mkvinfo
+### mkvinfo
 
 *Python library for probing matroska files with mkvmerge*
 
@@ -488,7 +518,7 @@ the JSON output into typed Python objects so I don't have to deal with it myself
 
 [`mkvmerge`]: https://mkvtoolnix.download/doc/mkvmerge.html
 
-## misaki
+### misaki
 
 *misaki is a fast, asynchronous link checker with optional FlareSolverr support.*
 
@@ -514,7 +544,9 @@ really fast link checker.
 [FlareSolverr]: https://github.com/FlareSolverr/FlareSolverr
 [`async-stream`]: https://docs.rs/async-stream/latest/async_stream/
 
-## ravencentric.github.io
+## 2026
+
+### ravencentric.github.io
 
 [[GitHub]](https://github.com/Ravencentric/ravencentric.github.io)
 
