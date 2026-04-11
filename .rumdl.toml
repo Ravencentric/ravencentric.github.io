@@ -5,7 +5,7 @@ exclude = [
 ]
 respect-gitignore = true
 disable = [
-  "MD036"  # Too many false positives
+  "MD036"  # "Use real headings, not just bold text" - Too many false positives
 ]
 
 [MD013]
