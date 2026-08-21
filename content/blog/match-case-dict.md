@@ -141,4 +141,7 @@ match mapping:
 
     # What I actually need to write for an exact match
     case {"deploy": str(environment)} if len(items) == 1: ...
+    # or alternatively
+    case {"deploy": str(environment), **rest} if not rest: ...
 ```
+
