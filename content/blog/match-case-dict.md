@@ -10,51 +10,52 @@ tags = [
 +++
 
 While working on my [`privatebin`](https://github.com/Ravencentric/privatebin) library,
-I encountered a surprising behavior when pattern matching on a `dict`.
+I ran into a surprising behavior when pattern matching on a `dict`.
 
-Before I get to `dict`, let's check out how pattern matching works on sequences:
+Before I get to `dict`, let's see how pattern matching works on sequences:
 
 ```py
-def describe(*items: str) -> None:
+def describe(items: list[str]) -> None:
     match items:
         # Exactly match a sequence with a single item that must be "deploy"
         case ["deploy"]:
-            print("Deploying with defaults")
+            print("Case 1: Deploying with defaults")
 
         # Exactly match a sequence with two items: "deploy" and a string,
         # binding the second item to "environment"
         case ["deploy", str(environment)]:
-            print(f"Deploying to {environment}")
+            print(f"Case 2: Deploying to {environment}")
 
         # Match a sequence with at least three items: "deploy", two strings,
         # and zero or more additional items, binding them to variables
         case ["deploy", str(environment), str(service), *options]:
             print(
-                f"Deploying {service} to {environment} "
+                f"Case 3: Deploying {service} to {environment} "
                 f"with options {options}"
             )
-
-describe("deploy")
-#> Deploying with defaults
-describe("deploy", "production")
-#> Deploying to production
-describe("deploy", "production", "api", "--force", "--verbose")
-#> Deploying api to production with options ['--force', '--verbose']
+```
+```py
+>>> describe(["deploy"])
+Case 1: Deploying with defaults
+>>> describe(["deploy", "production"])
+Case 2: Deploying to production
+>>> describe(["deploy", "production", "api", "--force", "--verbose"])
+Case 3: Deploying api to production with options ['--force', '--verbose']
 
 ```
 
 Behaves exactly as you would expect, no surprises here.
 
-Now the same thing with `dict`:
+Let's try the same thing with `dict`:
 
 ```py
 def describe(items: dict[str, str]) -> None:
     match items:
         case {"deploy": str(environment)}:
-            print(f"Deploying to {environment}")
+            print(f"Case 1: Deploying to {environment}")
 
         case {"deploy": str(environment), "service": str(service)}:
-            print(f"Deploying {service} to {environment}")
+            print(f"Case 2: Deploying {service} to {environment}")
 
         case {
             "deploy": str(environment),
@@ -62,38 +63,36 @@ def describe(items: dict[str, str]) -> None:
             **options,
         }:
             print(
-                f"Deploying {service} to {environment} "
+                f"Case 3: Deploying {service} to {environment} "
                 f"with options {options}"
             )
 
 ```
 
-Now let's run this:
-
 ```py
 >>> describe({"deploy": "production"})
-Deploying to production
+Case 1: Deploying to production
 >>> describe({"deploy": "production", "service": "api"})
-Deploying to production
+Case 1: Deploying to production
 
 ```
 
-The dictionary never made it to the second case! This is how I found out that mapping
-patterns, unlike sequences, don't match the shape exactly.
+The second input never made it to the second case!
+Turns out mapping patterns, unlike sequences, don't match the shape exactly.
 
-This seems incredibly odd to me because this means it's impossible to match the exact
-shape without guards, while there are two ways to spell "give me this key, ignore
-everything else":
+This seems incredibly odd to me because it means there's no way to match the exact shape
+without a guard, while there are two ways to spell "match this key, whether or not other
+keys are present":
 
 ```py
 case {"deploy": str(environment)}: ...
-case {"deploy": str(environment), **kwargs}: ...
+case {"deploy": str(environment), **rest}: ...
 
 ```
 
-This naturally made me curious and I decided to read
+This naturally made me curious so I decided to read
 [PEP-0635](https://peps.python.org/pep-0635/#mapping-patterns)
-which states:
+which says:
 
 > The mapping pattern reflects the common usage of dictionary lookup: it allows
 > the user to extract some values from a mapping by means of constant/known
@@ -111,10 +110,10 @@ which states:
 > is not supported as it would not have any effect, but might lead to an
 > incorrect understanding of the mapping pattern's semantics.
 
-While I agree with this sentiment, this means common case
-gets to save a whole `5` characters
-while making the uncommon case both unintuitive and 3x longer (`19` characters)
-because it now requires an `if` guard
+While I understand the reasoning behind this, I still find the resulting behavior pretty
+unintuitive. I naturally assumed I could write `{"deploy": str(environment), **_}` when
+I wanted to match deploy and ignore any extra keys. Surely I'm not the only one who'd
+make that assumption.
 
 So this leaves us with the following disparity between sequences and mappings:
 
@@ -138,10 +137,23 @@ match mapping:
     # SyntaxError, because it's identical to the first case
     # and serves no purpose
     case {"deploy": str(environment), **_}: ...
+```
 
-    # What I actually need to write for an exact match
+As I alluded to earlier, there is a way around this with an `if` guard. You first match
+the required keys, then use the guard to make sure there are no other items in your
+dict. Not super complex or anything, but certainly not as elegant as it could have been.
+Not to mention, you have to be aware of this behavior in the first place.
+
+```py
+match items:
     case {"deploy": str(environment)} if len(items) == 1: ...
-    # or alternatively
+```
+
+or, something a bit more DRY:
+
+```py
+match items:
     case {"deploy": str(environment), **rest} if not rest: ...
 ```
 
+The latter is probably better because you don't have to update the length check.
