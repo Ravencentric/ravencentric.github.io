@@ -4,8 +4,9 @@ title = "TODO"
 date = "2026-08-21"
 description = "TODO"
 tags = [
-    "Python",
+    "python",
     "match-case",
+    "til",
 ]
 +++
 
@@ -17,17 +18,17 @@ Before I get to `dict`, let's see how pattern matching works on sequences:
 ```py
 def describe(items: list[str]) -> None:
     match items:
-        # Exactly match a sequence with a single item that must be "deploy"
+        # Match exactly one item: "deploy"
         case ["deploy"]:
             print("Case 1: Deploying with defaults")
 
-        # Exactly match a sequence with two items: "deploy" and a string,
-        # binding the second item to "environment"
+        # Match exactly two items: "deploy" and a string
+        # binding the string to "environment"
         case ["deploy", str(environment)]:
             print(f"Case 2: Deploying to {environment}")
 
-        # Match a sequence with at least three items: "deploy", two strings,
-        # and zero or more additional items, binding them to variables
+        # Match "deploy", two strings, and zero or more additional items
+        # captured in `options`
         case ["deploy", str(environment), str(service), *options]:
             print(
                 f"Case 3: Deploying {service} to {environment} "
@@ -119,24 +120,23 @@ So this leaves us with the following disparity between sequences and mappings:
 
 ```py 
 match sequence:
-    # Matches exactly
+    # Match exactly
     case ["deploy", str(environment)]: ...
-    # Match the first two, capture and bind zero or more items to `rest`
+    # Match the first two and capture any remaining items in `rest`
     case ["deploy", str(environment), *rest]: ...
-    # Match the first two, capture and discard zero or more items
+    # Match the first two and ignore any remaining items
     case ["deploy", str(environment), *_]: ...
 ```
 
 ```py
 match mapping:
-    # match any dict that has a "deploy" key with string value
+    # Match any dict with a "deploy" key containing a string
+    # ignoring any extra keys
     case {"deploy": str(environment)}: ...
-    # match any dict that has a "deploy" key with string value 
-    # and capture and bind zero or more items to `rest`
+    # Match any dict with a "deploy" key and capture extra keys in `rest`
     case {"deploy": str(environment), **rest}: ...
-    # SyntaxError, because it's identical to the first case
-    # and serves no purpose
-    case {"deploy": str(environment), **_}: ...
+    # SyntaxError: identical to the first case and serves no purpose
+    case {"deploy": str(environment), **_}: .....
 ```
 
 As I alluded to earlier, there is a way around this with an `if` guard. You first match
