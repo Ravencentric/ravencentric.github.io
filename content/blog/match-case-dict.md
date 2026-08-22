@@ -156,4 +156,4 @@ match items:
     case {"deploy": str(environment), **rest} if not rest: ...
 ```
 
-The latter is probably better because you don't have to update the length check.
+The latter is probably better because you don't have to update the number you're checking.
