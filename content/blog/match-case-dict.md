@@ -13,7 +13,7 @@ tags = [
 While working on my [`privatebin`](https://github.com/Ravencentric/privatebin) library,
 I ran into a surprising behavior when pattern matching on a `dict`.
 
-Before I get to `dict`, let's see how pattern matching works on sequences:
+Before I get to that though, let's see how pattern matching works on sequences:
 
 ```py
 def describe(items: list[str]) -> None:
