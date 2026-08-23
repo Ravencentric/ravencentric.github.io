@@ -11,7 +11,8 @@ tags = [
 +++
 
 While working on my [`privatebin`](https://github.com/Ravencentric/privatebin) library,
-I ran into an unexpected behavior when pattern matching on a `dict`.
+I ran into an unexpected behavior when
+[pattern matching on a `dict`](https://github.com/Ravencentric/privatebin/blob/cf329a72930b50d881dc04adbaac5a33d0350aa5/src/privatebin/_core.py#L187).
 
 Before I get to that though, let's see how pattern matching works on sequences:
 
@@ -92,6 +93,9 @@ case {"deploy": str(environment)}: ...
 case {"deploy": str(environment), **rest}: ...
 
 ```
+Both of these patterns match the same dictionaries. 
+`**rest` merely gives you access to the keys that would otherwise be ignored, 
+which you can just as well ignore.
 
 This made me curious so I decided to read
 [PEP-0635](https://peps.python.org/pep-0635/#mapping-patterns)
