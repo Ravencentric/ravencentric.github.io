@@ -4,9 +4,9 @@ title = "TODO"
 date = "2026-08-21"
 description = "TODO"
 tags = [
-    "python",
+    "Python",
     "match-case",
-    "til",
+    "TIL",
 ]
 +++
 
@@ -22,8 +22,8 @@ def describe(items: list[str]) -> None:
         case ["deploy"]:
             print("Case 1: Deploying with defaults")
 
-        # Match exactly two items: "deploy" and a string
-        # binding the string to "environment"
+        # Match exactly two items: "deploy" and a string,
+        # binding the string to `environment`
         case ["deploy", str(environment)]:
             print(f"Case 2: Deploying to {environment}")
 
@@ -35,6 +35,7 @@ def describe(items: list[str]) -> None:
                 f"with options {options}"
             )
 ```
+
 ```py
 >>> describe(["deploy"])
 Case 1: Deploying with defaults
@@ -79,7 +80,8 @@ Case 1: Deploying to production
 ```
 
 The second input never made it to the second case!
-Turns out mapping patterns, unlike sequences, don't match the shape exactly.
+Turns out mapping patterns, unlike sequence patterns,
+don't require an exact shape: extra keys are simply ignored.
 
 This seems incredibly odd to me because it means there's no way to match the exact shape
 without a guard, while there are two ways to spell "match this key, whether or not other
@@ -91,7 +93,7 @@ case {"deploy": str(environment), **rest}: ...
 
 ```
 
-This naturally made me curious so I decided to read
+This made me curious so I decided to read
 [PEP-0635](https://peps.python.org/pep-0635/#mapping-patterns)
 which says:
 
@@ -111,10 +113,10 @@ which says:
 > is not supported as it would not have any effect, but might lead to an
 > incorrect understanding of the mapping pattern's semantics.
 
-While I understand the reasoning behind this, I still find the resulting behavior pretty
+While I understand the reasoning behind this, I still find the behavior pretty
 unintuitive. I naturally assumed I could write `{"deploy": str(environment), **_}` when
-I wanted to match deploy and ignore any extra keys. Surely I'm not the only one who'd
-make that assumption.
+I wanted to match `"deploy"` and ignore any extra keys. Surely I'm not the only one
+who'd make that assumption.
 
 So this leaves us with the following disparity between sequences and mappings:
 
@@ -133,16 +135,16 @@ match mapping:
     # Match any dict with a "deploy" key containing a string
     # ignoring any extra keys
     case {"deploy": str(environment)}: ...
-    # Match any dict with a "deploy" key and capture extra keys in `rest`
+    # Match any dict with a "deploy" key, capturing any extra keys in `rest`
     case {"deploy": str(environment), **rest}: ...
     # SyntaxError: identical to the first case and serves no purpose
     case {"deploy": str(environment), **_}: .....
 ```
 
-As I alluded to earlier, there is a way around this with an `if` guard. You first match
-the required keys, then use the guard to make sure there are no other items in your
-dict. Not super complex or anything, but certainly not as elegant as it could have been.
-Not to mention, you have to be aware of this behavior in the first place.
+As I alluded to earlier, there is a way to work around this with an `if` guard. You
+first match the required keys, then use the guard to make sure there are no other items
+in your dict. Not super complex or anything, but certainly not as elegant as it could
+have been. Not to mention, you have to be aware of this behavior in the first place.
 
 ```py
 match items:
@@ -156,4 +158,5 @@ match items:
     case {"deploy": str(environment), **rest} if not rest: ...
 ```
 
-The latter is probably better because you don't have to update the number you're checking.
+The latter is probably better because you don't have to update the number you're
+checking.
