@@ -93,8 +93,9 @@ case {"deploy": str(environment)}: ...
 case {"deploy": str(environment), **rest}: ...
 
 ```
-Both of these patterns match the same dictionaries. 
-`**rest` merely gives you access to the keys that would otherwise be ignored, 
+
+Both of these patterns match the same dictionaries.
+`**rest` merely gives you access to the keys that would otherwise be ignored,
 which you can just as well ignore.
 
 This made me curious so I decided to read
