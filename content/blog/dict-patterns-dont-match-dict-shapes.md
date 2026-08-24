@@ -2,7 +2,7 @@
 author = "Ravencentric"
 title = "Dict Patterns Don't Match Dict Shapes"
 date = "2026-08-21"
-description = "TODO"
+description = "Pattern matching on dictionaries ignores extra keys rather than failing."
 tags = [
     "Python",
     "match-case",
