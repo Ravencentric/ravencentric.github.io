@@ -1,6 +1,6 @@
 +++
 author = "Ravencentric"
-title = "TODO"
+title = "Dict Patterns Don't Match Dict Shapes"
 date = "2026-08-21"
 description = "TODO"
 tags = [
