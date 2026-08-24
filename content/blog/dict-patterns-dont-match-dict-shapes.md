@@ -1,7 +1,7 @@
 +++
 author = "Ravencentric"
 title = "Dict Patterns Don't Match Dict Shapes"
-date = "2026-08-21"
+date = "2026-08-24"
 description = "Pattern matching on dictionaries ignores extra keys rather than failing."
 tags = [
     "Python",
