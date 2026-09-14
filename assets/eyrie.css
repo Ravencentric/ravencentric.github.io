@@ -108,8 +108,8 @@ pre code {
   overflow-x: auto;
   padding: 1rem;
   border-radius: 0;
-  font-size: 0.82rem;
-  line-height: 1.65;
+  font-size: 14px;
+  line-height: 1.6;
   white-space: pre;
 }
 
@@ -128,7 +128,6 @@ pre code {
   margin: 0;
   overflow: auto;
   padding: 0.9rem 0;
-  color: #e1e2e7;
   background: #202127;
 }
 
@@ -141,9 +140,8 @@ pre code {
   min-width: 100%;
   overflow: visible;
   padding: 0;
+  color: #f8f8f2;
   background: transparent;
-  font-variant-ligatures: none;
-  tab-size: 4;
 }
 
 .highlight .chroma .hl {
