@@ -13,9 +13,7 @@ enableRobotsTXT = true
 [markup.highlight]
 lineNos = true
 lineNumbersInTable = false
-# This allows Bear Cub to use a variation of Dracula that is more accessible
-# to people with poor eyesight. For more information about color contrast
-# and accessibility, see https://web.dev/color-and-contrast-accessibility/
+# Emit Chroma classes so assets/syntax.css controls the highlighting palette.
 noClasses = false
 
 [params]

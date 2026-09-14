@@ -1,0 +1,142 @@
+/*
+ * Generated with:
+ * hugo gen chromastyles --style=catppuccin-macchiato --omitClassComments
+ * Then simplified and adjusted for this site's contrast.
+ */
+
+.chroma {
+  color: #cad3f5;
+}
+
+.chroma .err,
+.chroma .gd,
+.chroma .gr,
+.chroma .gt {
+  color: #ed8796;
+}
+
+.chroma .k,
+.chroma .kp,
+.chroma .kr,
+.chroma .nt {
+  color: #c6a0f6;
+}
+
+.chroma .kc,
+.chroma .ne,
+.chroma .nn,
+.chroma .py,
+.chroma .m,
+.chroma .mb,
+.chroma .mf,
+.chroma .mh,
+.chroma .mi,
+.chroma .il,
+.chroma .mo,
+.chroma .gh,
+.chroma .gu {
+  color: #f5a97f;
+}
+
+.chroma .kd,
+.chroma .kt,
+.chroma .sa {
+  color: #ed8796;
+}
+
+.chroma .kn,
+.chroma .ni,
+.chroma .sr {
+  color: #8bd5ca;
+}
+
+.chroma .na,
+.chroma .nd,
+.chroma .nf,
+.chroma .fm,
+.chroma .dl,
+.chroma .se {
+  color: #8aadf4;
+}
+
+.chroma .nd {
+  font-weight: bold;
+}
+
+.chroma .nc,
+.chroma .no {
+  color: #eed49f;
+}
+
+.chroma .nl,
+.chroma .nb,
+.chroma .bp,
+.chroma .o,
+.chroma .ow,
+.chroma .or {
+  color: #91d7e3;
+}
+
+.chroma .nv,
+.chroma .vc,
+.chroma .vg,
+.chroma .vi,
+.chroma .vm {
+  color: #f4dbd6;
+}
+
+.chroma .s,
+.chroma .sb,
+.chroma .sc,
+.chroma .s2,
+.chroma .si,
+.chroma .sx,
+.chroma .s1,
+.chroma .ss,
+.chroma .gi {
+  color: #a6da95;
+}
+
+.chroma .sd,
+.chroma .sh,
+.chroma .c,
+.chroma .cm,
+.chroma .c1,
+.chroma .cs,
+.chroma .cp,
+.chroma .cpf {
+  color: #8087a2;
+}
+
+.chroma .o,
+.chroma .ow,
+.chroma .or,
+.chroma .cpf,
+.chroma .gh,
+.chroma .gu {
+  font-weight: bold;
+}
+
+.chroma .c,
+.chroma .ch,
+.chroma .cm,
+.chroma .c1,
+.chroma .cs,
+.chroma .cp,
+.chroma .cpf,
+.chroma .ge {
+  font-style: italic;
+}
+
+.chroma .gd,
+.chroma .gi {
+  background-color: #363a4f;
+}
+
+.chroma .gs {
+  font-weight: bold;
+}
+
+.chroma .gl {
+  text-decoration: underline;
+}

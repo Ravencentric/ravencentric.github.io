@@ -92,17 +92,6 @@ a code {
   color: inherit;
 }
 
-/* Chroma italicizes a few token types by default. Keep code upright. */
-body .chroma .kd,
-body .chroma .nb,
-body .chroma .nl,
-body .chroma .nv,
-body .chroma .vc,
-body .chroma .vg,
-body .chroma .vi {
-  font-style: normal;
-}
-
 pre code {
   display: block;
   overflow-x: auto;
@@ -135,12 +124,16 @@ pre code {
   outline: 0;
 }
 
+.highlight .chroma {
+  -webkit-text-size-adjust: none;
+}
+
 .highlight code {
   width: max-content;
   min-width: 100%;
   overflow: visible;
   padding: 0;
-  color: #f8f8f2;
+  color: inherit;
   background: transparent;
 }
 
@@ -155,7 +148,13 @@ pre code {
   padding: 0 0.65rem;
   border-right: 1px solid #30323a;
   color: #696e7c;
+  white-space: pre;
   text-align: right;
+  user-select: none;
+}
+
+.highlight .chroma .line {
+  display: flex;
 }
 
 .highlight .chroma .cl {
