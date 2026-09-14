@@ -22,6 +22,7 @@ noClasses = false
 title = "Raven's eyrie"
 author = { name = "Ravencentric", email = "me@ravencentric.cc" }
 social = { github = "https://github.com/Ravencentric " }
+themeStyle = "eyrie"
 
 [[menu.main]]
 name = "GitHub"
